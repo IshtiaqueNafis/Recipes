@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="/header.html::header"></div>
+<body>
+<div th:replace="/header.html::navbar"></div>
+
+<div class="container">
+    <br><br><br>
+    <div class="card">
+        <div class="card-header">
+            <h2 class="text-center" th:text="${recipe?.id}?'Update Recipe':'Create Recipe'"></h2>
+        </div>
+
+        <div class="card-body">
+            <form role="form" method="post" th:action="@{/submit_recipe}" th:object="${recipe}">
+
+                <div class="mb-3">
+                    <label class="form-label">Recipe Name</label>
+                    <input type="text"
+                           class="form-control"
+                           id="name"
+                           name="name"
+                           placeholder="Enter Recipe name"
+                           th:field="*{name}"
+
+                    >
+                    <p  th:if="${#fields.hasErrors('name')}"  class="text-danger" th:errors="*{name}"></p>
+
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Recipe Description</label>
+                    <textarea type="text"
+                              class="form-control"
+                              id="description"
+                              name="description"
+                              placeholder="Enter Recipe Description"
+                              th:field="*{description}"
+
+                    >
+                    </textarea>
+                    <p th:if="${#fields.hasErrors('description')}" class="text-danger" th:errors="*{description}"></p>
+                </div>
+                <input type="hidden" th:field="*{id}">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+
+        </div>
+
+    </div>
+    <br>
+</div>
+<br>
+<br>
+<br>
+<div th:replace="/footer.html::footer"></div>
+
+</body>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.2.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#description' ) )
+        .then( editor => {
+            console.log( editor );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
+</html>

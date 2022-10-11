@@ -12,9 +12,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Builder
 @Table(name = "recipes")
-
+@Builder
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

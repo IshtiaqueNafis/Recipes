@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+
+>
+<div th:replace="/header.html::header"></div>
+<body>
+<div th:replace="/header.html::navbar"></div>
+
+
+<div class="container">
+
+    <div class="row">
+        <h1>Recipe List</h1>
+    </div>
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+        <th>#</th>
+        <th>Recipe name</th>
+        <th>Description</th>
+        <th>Created on</th>
+        <th>Actions</th>
+        </thead>
+        <tbody th:each="recipe,recipeStats:${recipes}">
+        <td th:text="${recipeStats.count}"></td>
+        <td th:text="${recipe.name}"></td>
+        <td th:text="${recipe.description}"></td>
+        <td th:text="${recipe.createdOn}"></td>
+        <td>
+            <a th:href="@{/recipe_form/{id}(id=${recipe.id})}" class="btn btn-primary">Edit</a>
+        </td>
+
+        </tbody>
+    </table>
+
+</div>
+<div th:replace="/footer.html::footer"></div>
+</body>
+</html>
