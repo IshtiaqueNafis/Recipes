@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<div th:replace="/header.html::header"></div>
+<body>
+<div th:replace="/header.html::navbar"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2 th:text="${recipe.name}"></h2>
+            <hr>
+            <div th:utext="${recipe.description}">
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<div th:replace="/footer.html::footer"></div>
+</body>
+</html>

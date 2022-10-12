@@ -64,6 +64,12 @@ public class RecipeServiceImpl implements RecipeService {
         }
     }
 
+    @Override
+    public List<RecipeDto> searchRecipes(String query) {
+        List<Recipe> recipes = recipeRepository.searchRecipes(query);
+        return recipes.stream().map(recipe -> new RecipeMapper().mapToRecipeDto(recipe)).collect(Collectors.toList());
+    }
+
     private static String getUrl(String recipeName) {
         String title = recipeName.trim().toLowerCase();
         String url = title.replaceAll("\\s+", "-");

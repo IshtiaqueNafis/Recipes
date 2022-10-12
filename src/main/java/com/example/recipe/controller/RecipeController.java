@@ -18,15 +18,8 @@ public class RecipeController {
     private RecipeService recipeService;
 
 
-    @GetMapping("/recipes")
-    public String recipes(Model model) {
-        List<RecipeDto> recipes = recipeService.getAllRecipes();
-        model.addAttribute("recipes", recipes);
-        return "recipes";
-    }
-
-    @GetMapping(value = {"/recipe_form" ,"recipe_form/{id}"})
-    public String newRecipeForm(Model model,  @PathVariable( value = "id", required = false) Long id) {
+    @GetMapping(value = {"/recipe_form", "recipe_form/{id}"})
+    public String newRecipeForm(Model model, @PathVariable(value = "id", required = false) Long id) {
 
         model.addAttribute("recipe", recipeService.findRecipeById(id));
         return "recipe_form";
@@ -46,6 +39,23 @@ public class RecipeController {
 
     }
 
+    @GetMapping(value = "recipe_details/{id}")
+    public String viewRecipeDetails(@PathVariable("id") long id, Model model) {
+        RecipeDto recipeDto = recipeService.findRecipeById(id);
+        model.addAttribute("recipe", recipeDto);
+        return "view_recipe";
+
+    }
+
+
+    @RequestMapping(path = {"/recipes"})
+    public String searchPosts(Model model) {
+        List<RecipeDto> recipes;
+        recipes = recipeService.getAllRecipes();
+        model.addAttribute("recipes", recipes);
+
+        return "recipes";
+    }
 
 
 }
