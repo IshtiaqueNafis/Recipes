@@ -38,7 +38,15 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping(value = "recipe_details/{id}")
+    public String viewRecipeDetails(@PathVariable("id") long id, Model model) {
+        RecipeDto recipeDto = recipeService.findRecipeById(id);
+        model.addAttribute("recipe", recipeDto);
+        CommentDto commentdto = new CommentDto();
+        model.addAttribute("comment", commentdto);
+        return "view_recipe";
 
+    }
     @PostMapping("/{recipeId}/comments")
     public String createComments(@PathVariable("recipeId") long recipeId, @Valid @ModelAttribute("comment") CommentDto commentDto, BindingResult result,Model model) {
 
