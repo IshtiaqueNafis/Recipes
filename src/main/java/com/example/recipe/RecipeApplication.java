@@ -22,13 +22,7 @@ public class RecipeApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Recipe[] recipes = new Recipe[]{
-                new Recipe(1L, "tastyy", "google.com", "good food", LocalDateTime.now(), LocalDateTime.now())
-        };
 
-        for(Recipe recipe:recipes){
-            recipeRepository.save(recipe);
-        }
 
     }
 

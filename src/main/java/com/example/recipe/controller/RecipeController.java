@@ -1,5 +1,6 @@
 package com.example.recipe.controller;
 
+import com.example.recipe.dto.CommentDto;
 import com.example.recipe.dto.RecipeDto;
 import com.example.recipe.services.RecipeService;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,8 @@ public class RecipeController {
     public String viewRecipeDetails(@PathVariable("id") long id, Model model) {
         RecipeDto recipeDto = recipeService.findRecipeById(id);
         model.addAttribute("recipe", recipeDto);
+        CommentDto commentdto = new CommentDto();
+        model.addAttribute("comment",commentdto);
         return "view_recipe";
 
     }
