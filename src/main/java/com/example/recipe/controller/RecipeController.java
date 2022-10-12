@@ -2,6 +2,7 @@ package com.example.recipe.controller;
 
 import com.example.recipe.dto.CommentDto;
 import com.example.recipe.dto.RecipeDto;
+import com.example.recipe.services.CommentService;
 import com.example.recipe.services.RecipeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import java.util.List;
 @Controller
 public class RecipeController {
     private RecipeService recipeService;
+    private CommentService commentService;
 
 
     @GetMapping(value = {"/recipe_form", "recipe_form/{id}"})
@@ -45,11 +47,21 @@ public class RecipeController {
         RecipeDto recipeDto = recipeService.findRecipeById(id);
         model.addAttribute("recipe", recipeDto);
         CommentDto commentdto = new CommentDto();
-        model.addAttribute("comment",commentdto);
+        model.addAttribute("comment", commentdto);
         return "view_recipe";
 
     }
 
+
+    //show list of comment request.
+
+    @GetMapping("/comments")
+    public String recipeComments(Model model) {
+        List<CommentDto> comments = commentService.findAllComments();
+        model.addAttribute("comments", comments);
+        return "comments";
+
+    }
 
     @RequestMapping(path = {"/recipes"})
     public String searchPosts(Model model) {
@@ -58,6 +70,12 @@ public class RecipeController {
         model.addAttribute("recipes", recipes);
 
         return "recipes";
+    }
+
+    @GetMapping("/recipes/comment/{commentId}")
+    public String deleteComment(@PathVariable("commentId") Long commentId) {
+        commentService.deleteComment(commentId);
+        return "comments";
     }
 
 

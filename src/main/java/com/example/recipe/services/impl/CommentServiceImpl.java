@@ -10,6 +10,9 @@ import com.example.recipe.services.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class CommentServiceImpl implements CommentService {
@@ -26,6 +29,16 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.save(comment);
 
 
+    }
 
+    @Override
+    public List<CommentDto> findAllComments() {
+        List<Comment> comments = commentRepository.findAll();
+        return comments.stream().map(comment -> CommentMapper.mapToCommentDto(comment)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteComment(Long commentId) {
+        commentRepository.deleteById(commentId);
     }
 }
