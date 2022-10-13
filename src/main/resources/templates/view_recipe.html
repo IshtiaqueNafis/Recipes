@@ -2,9 +2,9 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
 >
-<div th:replace="/header.html::header"></div>
+<div th:replace="fragments/header.html::header"></div>
 <body>
-<div th:replace="/header.html::navbar"></div>
+<div th:replace="fragments/header.html::navbar"></div>
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
@@ -21,7 +21,8 @@
         <div th:each="comment: ${recipe.comments}">
             <div>
                 <p>Name:<b><strong th:text="${comment.name}"></strong></b></p>
-                <p>dateCreated:<b><strong th:text="${#temporals.format(comment.createdOn,'dd MMM yyyy')}"></strong></b></p>
+                <p>dateCreated:<b><strong th:text="${#temporals.format(comment.createdOn,'dd MMM yyyy')}"></strong></b>
+                </p>
                 <p>content:<b><strong th:text="${comment.content}"></strong></b></p>
             </div>
         </div>
@@ -96,6 +97,6 @@
 </div>
 <br><br><br>
 
-<div th:replace="/footer.html::footer"></div>
+<div th:replace="fragments/footer.html::footer"></div>
 </body>
 </html>
