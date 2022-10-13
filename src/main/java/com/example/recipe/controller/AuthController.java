@@ -1,47 +1,51 @@
 package com.example.recipe.controller;
 
 import com.example.recipe.dto.RegistrationDto;
-import com.example.recipe.models.Role;
 import com.example.recipe.models.User;
-import com.example.recipe.repository.RolesRepository;
-import com.example.recipe.repository.UserRepository;
+import com.example.recipe.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Arrays;
+import javax.validation.Valid;
 
 @Controller
 @AllArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
 
-    private RolesRepository rolesRepository;
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping("/register")
-    public String registrationForm(Model model){
+    public String registrationForm(Model model) {
         RegistrationDto user = new RegistrationDto();
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         return "register";
     }
 
-//    @PostMapping("/register/save")
-//    public String registerUser(RegistrationDto registrationDto){
-//        User user = new User();
-//        user.setName(registrationDto.getFirstName()+ " " + registrationDto.getLastName());
-//        user.setEmail(registrationDto.getEmail());
-//        user.setPassword(registrationDto.getPassword());
-//        Role role = rolesRepository.findByName("ROLE_REGISTERED");
-//        user.setRoles(Arrays.asList(role));
-//        userRepository.save(user);
-//
-//
-//
-//
-//    }
+    @PostMapping("/register/save")
+    public String registerUser(@Valid @ModelAttribute("user") RegistrationDto user, BindingResult result,Model model) {
+
+        User existingUser = userService.findByEmail(user.getEmail());
+
+        if(existingUser!=null){
+            result.rejectValue("email",null,"email is already taken");
+
+        }
+        if(result.hasErrors()){
+            model.addAttribute("user",user);
+            return "/register";
+        }
+
+        userService.saveUser(user);
+        return "redirect:/";
+
+
+    }
 
 }
