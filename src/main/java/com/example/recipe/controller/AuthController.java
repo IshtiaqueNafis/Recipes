@@ -48,4 +48,9 @@ public class AuthController {
 
     }
 
+    @GetMapping("/loginForm")
+    public String loginForm(Model model){
+        return "login";
+    }
+
 }

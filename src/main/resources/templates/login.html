@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <div th:replace=" fragments/header.html::header"></div>
+</head>
+<div th:replace="fragments/header.html::navbar"></div>
+<body>
+<br><br><br>
+
+
+<div class="container">
+
+    <div th:if="${param.error}">
+        <div class="alert alert-danger">
+            invalid credentials
+        </div>
+    </div>
+
+    <div th:if="${param.logout}">
+        <div class="alert alert-success">
+            you have been logged out
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <div class="card">
+
+            <div class="card-header">
+                <h2 class="text-center">Login Form</h2>
+            </div>
+
+            <div class="card-body">
+                <form role="form" th:action="@{/login}" method="post">
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" id="username" name="username" class="form-control"/>
+                        <label class="form-label" for="username">Email address</label>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <input type="password" id="password" name="password" class="form-control"/>
+                        <label class="form-label" for="password">Password</label>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                </form>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+</body>
+<div th:replace="fragments/footer.html::footer"></div>
+</html>

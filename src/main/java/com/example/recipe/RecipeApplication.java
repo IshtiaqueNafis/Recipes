@@ -22,7 +22,7 @@ public class RecipeApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Role roles = new Role(1L, "ROLE_REGISTERED");
+        Role roles = new Role(1L, "REGISTERED");
         rolesRepository.save(roles);
     }
 
