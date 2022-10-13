@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -23,5 +25,6 @@ public class RecipeDto {
     private String description;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
+    private Set<CommentDto> comments= new HashSet<>();
 
 }

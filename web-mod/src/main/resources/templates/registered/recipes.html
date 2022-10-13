@@ -3,9 +3,9 @@
       xmlns:th="http://www.thymeleaf.org"
 
 >
-<div th:replace="/header.html::header"></div>
+<div th:replace="fragments/header.html::header"></div>
 <body>
-<div th:replace="/header.html::navbar"></div>
+<div th:replace="fragments/header.html::navbar"></div>
 
 
 <div class="container">
@@ -50,6 +50,6 @@
     </table>
 
 </div>
-<div th:replace="/footer.html::footer"></div>
+<div th:replace="fragments/footer.html::footer"></div>
 </body>
 </html>

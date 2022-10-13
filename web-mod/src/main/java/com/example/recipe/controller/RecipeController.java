@@ -1,6 +1,8 @@
 package com.example.recipe.controller;
 
+import com.example.recipe.dto.CommentDto;
 import com.example.recipe.dto.RecipeDto;
+import com.example.recipe.services.CommentService;
 import com.example.recipe.services.RecipeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,15 +16,17 @@ import java.util.List;
 
 @AllArgsConstructor
 @Controller
+@RequestMapping("/registered")
 public class RecipeController {
     private RecipeService recipeService;
+    private CommentService commentService;
 
 
     @GetMapping(value = {"/recipe_form", "recipe_form/{id}"})
     public String newRecipeForm(Model model, @PathVariable(value = "id", required = false) Long id) {
 
         model.addAttribute("recipe", recipeService.findRecipeById(id));
-        return "recipe_form";
+        return "registered/recipe_form";
     }
 
     //handler method to handle submit request
@@ -31,7 +35,7 @@ public class RecipeController {
 
         if (result.hasErrors()) {
             model.addAttribute("recipe", recipeDto);
-            return "recipe_form";
+            return "registered/recipe_form";
         }
         recipeService.submitRecipe(recipeDto);
         return "redirect:/recipes";
@@ -47,6 +51,15 @@ public class RecipeController {
 
     }
 
+    //show list of comment request.
+
+    @GetMapping("/comments")
+    public String recipeComments(Model model) {
+        List<CommentDto> comments = commentService.findAllComments();
+        model.addAttribute("comments", comments);
+        return "registered/comments";
+
+    }
 
     @RequestMapping(path = {"/recipes"})
     public String searchPosts(Model model) {
@@ -54,7 +67,13 @@ public class RecipeController {
         recipes = recipeService.getAllRecipes();
         model.addAttribute("recipes", recipes);
 
-        return "recipes";
+        return "registered/recipes";
+    }
+
+    @GetMapping("/recipes/comment/{commentId}")
+    public String deleteComment(@PathVariable("commentId") Long commentId) {
+        commentService.deleteComment(commentId);
+        return "registered/comments";
     }
 
 

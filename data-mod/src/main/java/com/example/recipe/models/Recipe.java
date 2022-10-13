@@ -3,9 +3,12 @@ package com.example.recipe.models;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,6 +18,8 @@ import java.time.LocalDateTime;
 @Table(name = "recipes")
 @Builder
 public class Recipe {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -42,6 +47,11 @@ public class Recipe {
     @UpdateTimestamp
     @Column(name = "updated_on")
     private LocalDateTime updatedOn;
+
+
+
+    @OneToMany(mappedBy = "recipe",  cascade = CascadeType.REMOVE)
+    private Set<Comment> comments = new HashSet<>();
 
 
 }
