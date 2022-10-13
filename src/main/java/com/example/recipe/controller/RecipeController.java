@@ -38,7 +38,7 @@ public class RecipeController {
             return "registered/recipe_form";
         }
         recipeService.submitRecipe(recipeDto);
-        return "redirect:/recipes";
+        return "redirect:/registered/recipes";
 
 
     }

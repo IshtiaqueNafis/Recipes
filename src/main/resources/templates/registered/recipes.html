@@ -28,7 +28,7 @@
         <td th:text="${recipe.description}"></td>
         <td th:text="${recipe.createdOn}"></td>
         <td>
-            <a th:href="@{/recipe_form/{id}(id=${recipe.id})}" class="btn btn-primary">Edit</a>
+            <a th:href="@{/registered/recipe_form/{id}(id=${recipe.id})}" class="btn btn-primary">Edit</a>
             <a th:href="@{/recipe_details/{id}(id=${recipe.id})}" class="btn btn-primary">View Details</a>
         </td>
 

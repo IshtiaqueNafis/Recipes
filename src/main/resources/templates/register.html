@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <div th:replace=" fragments/header.html::header"></div>
+</head>
+<div th:replace="fragments/header.html::navbar"></div>
+<body>
+<br><br><br>
+<div class="container">
+
+    <div class="row cold md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Registration </h2>
+            </div>
+
+            <div class="card-body">
+                <form method="post" role="form" th:action="@{/auth/register/save}"
+                      th:object="${user}"
+                >
+                    <!-- 2 column grid layout with text inputs for the first and last names -->
+
+                    <div class="form-group mb-3">
+                        <div class="form-outline">
+                            <input type="text" id="firstName" th:field="*{firstName}" class="form-control"/>
+                            <label class="form-label" for="firstName">First name</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <div class="form-outline">
+                            <input type="text" id="lastName" class="form-control"/>
+                            <label class="form-label" for="lastName">Last name</label>
+                        </div>
+                    </div>
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-3">
+                        <input type="email" id="email" th:field="*{email}" class="form-control"/>
+                        <label class="form-label" for="email">Email address</label>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-3">
+                        <input type="password" id="password" th:field="*{password}" class="form-control"/>
+                        <label class="form-label" for="password">Password</label>
+                    </div>
+
+                    <div class="form-group mb-3">
+
+                        <button type="submit" class="btn btn-primary">Sign up</button>
+                        <span>
+                            Already Registered?
+                            <a th:href="@{/auth/login}">Log in here</a>
+                        </span>
+
+                    </div>
+                    <!-- Submit button -->
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+<div th:replace="fragments/footer.html::footer"></div>
+</html>
