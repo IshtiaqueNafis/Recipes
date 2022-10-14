@@ -10,15 +10,22 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 
 @Service
-@AllArgsConstructor
+
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private RolesRepository rolesRepository;
 
     private PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserRepository userRepository, RolesRepository rolesRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.rolesRepository = rolesRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public void saveUser(RegistrationDto registrationDto) {
@@ -27,12 +34,15 @@ public class UserServiceImpl implements UserService {
         user.setEmail(registrationDto.getEmail());
         user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
         Role role = rolesRepository.findByName("REGISTERED");
+        System.out.println(role.getName());
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);
     }
 
     @Override
+    @Transactional
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email);
+        return user;
     }
 }

@@ -28,6 +28,6 @@ public class Role {
         this.name = name;
     }
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "roles")
     private List<User> users = new ArrayList<>();
 }

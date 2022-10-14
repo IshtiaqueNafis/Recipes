@@ -1,10 +1,10 @@
 package com.example.recipe.config;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,10 +15,15 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+
 public class WebSpringSecurity {
 
     private UserDetailsService userDetailsService;
+
+    public WebSpringSecurity(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -27,19 +32,19 @@ public class WebSpringSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.headers().frameOptions().disable();
 
-        http.csrf().
-                disable().
 
-                authorizeRequests().
+        http.authorizeRequests().
                 antMatchers("/resources/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/registered/**").hasAnyRole("REGISTERED")
-                .and().formLogin(form -> form.loginPage("/auth/loginForm").defaultSuccessUrl("/").loginProcessingUrl("/login").permitAll()).logout(
+                .antMatchers("/h2/**").permitAll()
+                .antMatchers("/registered/**").hasAuthority("REGISTERED").anyRequest().permitAll()
+                .and().formLogin(form -> form.loginPage("/auth/loginForm").defaultSuccessUrl("/registered/recipes").loginProcessingUrl("/login").permitAll()).logout(
                         logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
 
-                );
+                ).headers().frameOptions().disable().and().
+                csrf().
+                disable();
 
 
         return http.build();

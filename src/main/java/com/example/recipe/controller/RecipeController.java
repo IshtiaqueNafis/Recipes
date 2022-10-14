@@ -16,13 +16,13 @@ import java.util.List;
 
 @AllArgsConstructor
 @Controller
-@RequestMapping("/registered")
+
 public class RecipeController {
     private RecipeService recipeService;
     private CommentService commentService;
 
 
-    @GetMapping(value = {"/recipe_form", "recipe_form/{id}"})
+    @GetMapping(value = {"/registered/recipe_form", "registered/recipe_form/{id}"})
     public String newRecipeForm(Model model, @PathVariable(value = "id", required = false) Long id) {
 
         model.addAttribute("recipe", recipeService.findRecipeById(id));
@@ -30,7 +30,7 @@ public class RecipeController {
     }
 
     //handler method to handle submit request
-    @PostMapping("/submit_recipe")
+    @PostMapping("/registered/submit_recipe")
     public String createRecipe(@Valid @ModelAttribute("recipe") RecipeDto recipeDto, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
@@ -48,7 +48,7 @@ public class RecipeController {
 
     //show list of comment request.
 
-    @GetMapping("/comments")
+    @GetMapping("/registered/comments")
     public String recipeComments(Model model) {
         List<CommentDto> comments = commentService.findAllComments();
         model.addAttribute("comments", comments);
@@ -56,7 +56,7 @@ public class RecipeController {
 
     }
 
-    @RequestMapping(path = {"/recipes"})
+    @GetMapping(path = {"/registered/recipes"})
     public String searchPosts(Model model) {
         List<RecipeDto> recipes;
         recipes = recipeService.getAllRecipes();
@@ -65,7 +65,7 @@ public class RecipeController {
         return "registered/recipes";
     }
 
-    @GetMapping("/recipes/comment/{commentId}")
+    @GetMapping("/registered/recipes/comment/{commentId}")
     public String deleteComment(@PathVariable("commentId") Long commentId) {
         commentService.deleteComment(commentId);
         return "registered/comments";

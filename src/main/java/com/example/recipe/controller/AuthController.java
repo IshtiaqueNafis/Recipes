@@ -43,13 +43,13 @@ public class AuthController {
         }
 
         userService.saveUser(user);
-        return "redirect:/";
+        return "redirect:/auth/register?success";
 
 
     }
 
     @GetMapping("/loginForm")
-    public String loginForm(Model model){
+    public String loginForm(){
         return "login";
     }
 
