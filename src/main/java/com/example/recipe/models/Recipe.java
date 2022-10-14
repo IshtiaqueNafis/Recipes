@@ -54,4 +54,8 @@ public class Recipe {
     private Set<Comment> comments = new HashSet<>();
 
 
+  @ManyToOne
+  @JoinColumn(name = "created_by",nullable = false)
+  private User createdBy;
+
 }
