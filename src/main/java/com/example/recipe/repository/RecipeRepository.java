@@ -14,5 +14,8 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     )
     List<Recipe> searchRecipes(String query);
 
+    @Query(value = "SELECT * FROM recipes r where r.created_by  = :userId" ,nativeQuery = true)
+    List<Recipe>findRecipesByUser(Long userId);
+
 
 }

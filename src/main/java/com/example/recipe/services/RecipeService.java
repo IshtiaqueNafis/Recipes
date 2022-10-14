@@ -17,5 +17,6 @@ public interface RecipeService {
     void submitRecipe(RecipeDto recipe);
 
     List<RecipeDto> searchRecipes(String query);
+    List<RecipeDto> findRecipeByUser();
 
 }

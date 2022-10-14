@@ -3,8 +3,11 @@ package com.example.recipe.services.impl;
 import com.example.recipe.dto.RecipeDto;
 import com.example.recipe.mapper.RecipeMapper;
 import com.example.recipe.models.Recipe;
+import com.example.recipe.models.User;
 import com.example.recipe.repository.RecipeRepository;
+import com.example.recipe.repository.UserRepository;
 import com.example.recipe.services.RecipeService;
+import com.example.recipe.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class RecipeServiceImpl implements RecipeService {
     private RecipeRepository recipeRepository;
+    private UserRepository userRepository;
 
     @Override
     public List<RecipeDto> getAllRecipes() {
@@ -26,12 +30,18 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public void createRecipe(RecipeDto recipeDto) {
         Recipe recipe = new RecipeMapper().mapToRecipe(recipeDto);
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User user = userRepository.findByEmail(email);
+        recipe.setCreatedBy(user);
         recipeRepository.save(recipe);
     }
 
     @Override
     public void updateRecipe(RecipeDto recipeDto) {
         Recipe recipe = new RecipeMapper().mapToRecipe(recipeDto);
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User user = userRepository.findByEmail(email);
+        recipe.setCreatedBy(user);
         recipeRepository.save(recipe);
 
     }
@@ -68,6 +78,15 @@ public class RecipeServiceImpl implements RecipeService {
     public List<RecipeDto> searchRecipes(String query) {
         List<Recipe> recipes = recipeRepository.searchRecipes(query);
         return recipes.stream().map(recipe -> new RecipeMapper().mapToRecipeDto(recipe)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RecipeDto> findRecipeByUser() {
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User user = userRepository.findByEmail(email);
+        Long UserId = user.getId();
+      List <Recipe> recipes =  recipeRepository.findRecipesByUser(UserId);
+          return  recipes.stream().map((recipe -> new RecipeMapper().mapToRecipeDto(recipe))).collect(Collectors.toList());
     }
 
     private static String getUrl(String recipeName) {

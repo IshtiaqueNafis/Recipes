@@ -4,9 +4,12 @@ import com.example.recipe.dto.CommentDto;
 import com.example.recipe.mapper.CommentMapper;
 import com.example.recipe.models.Comment;
 import com.example.recipe.models.Recipe;
+import com.example.recipe.models.User;
 import com.example.recipe.repository.CommentRepository;
 import com.example.recipe.repository.RecipeRepository;
+import com.example.recipe.repository.UserRepository;
 import com.example.recipe.services.CommentService;
+import com.example.recipe.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,7 @@ import java.util.stream.Collectors;
 public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
     private RecipeRepository recipeRepository;
+    private UserRepository userRepository;
 
 
     @Override
@@ -41,4 +45,14 @@ public class CommentServiceImpl implements CommentService {
     public void deleteComment(Long commentId) {
         commentRepository.deleteById(commentId);
     }
+
+    @Override
+    public List<CommentDto> findCommentByRecipes() {
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User user = userRepository.findByEmail(email);
+        Long userId = user.getId();
+        List<Comment> comments = commentRepository.findCommentByRecipe(userId);
+        return comments.stream().map((comment) -> CommentMapper.mapToCommentDto(comment)).collect(Collectors.toList());
+    }
+
 }

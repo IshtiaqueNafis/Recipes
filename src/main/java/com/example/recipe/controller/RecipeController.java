@@ -50,7 +50,7 @@ public class RecipeController {
 
     @GetMapping("/registered/comments")
     public String recipeComments(Model model) {
-        List<CommentDto> comments = commentService.findAllComments();
+        List<CommentDto> comments = commentService.findCommentByRecipes();
         model.addAttribute("comments", comments);
         return "registered/comments";
 
@@ -59,7 +59,7 @@ public class RecipeController {
     @GetMapping(path = {"/registered/recipes"})
     public String searchPosts(Model model) {
         List<RecipeDto> recipes;
-        recipes = recipeService.getAllRecipes();
+        recipes = recipeService.findRecipeByUser();
         model.addAttribute("recipes", recipes);
 
         return "registered/recipes";
