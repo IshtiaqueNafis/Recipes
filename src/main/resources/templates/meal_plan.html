@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <meta charset="UTF-8">
+  <div th:replace="fragments/header.html::header"></div>
+  <link href="css/main.css"  rel="stylesheet" type="text/css">
+  <link href="icons/style.css" rel="stylesheet" type="text/css">
+</head>
+<div th:replace="fragments/header.html::navbar"></div>
+<br><br><br>
+<body>
+<div class="main" style="display: flex;">
+  <div style="margin-right: 10px;">
+    <div id="nav"></div>
+  </div>
+  <div style="flex-grow: 1">
+    <div id="dp"></div>
+  </div>
+</div>
+
+<script  src="js/daypilot/daypilot-all.min.js"></script>
+
+
+<script th:inline="javascript">
+
+  const nav = new DayPilot.Navigator("nav");
+  nav.showMonths = 3;
+  nav.skipMonths = 3;
+  nav.selectMode = "week";
+  nav.onTimeRangeSelected = (args) => {
+    dp.startDate = args.day;
+    dp.update();
+    dp.events.load("/api/meal_plan");
+  };
+  nav.init();
+
+
+  const dp = new DayPilot.Calendar("dp");
+  dp.viewType = "Week";
+
+
+
+  const data = {
+    first: "Jane",
+    last: "Doe",
+    id: 1204
+  };
+
+  var resources = [
+    {name: "Resource A", id: "A"},
+    {name: "Resource B", id: "B"},
+    {name: "Resource C", id: "C"},
+  ];
+
+  function validateTextRequired(args) {
+    var value = args.value || "";
+    if (value.trim().length === 0) {
+      args.valid = false;
+      args.message = "Text required";
+    }
+    else if (value.toLowerCase().includes("a")) {
+      args.valid = false;
+      args.message = "Text must not contain 'a'.";
+    }
+    else if (value.includes("2020")) {
+      args.valid = false;
+      args.message = "2020 not allowed.";
+    }
+  }
+  var form = [
+    {name: "Text", id: "text", onValidate: validateTextRequired },
+    {name: "Note", id: "note", onValidate: validateTextRequired },
+    {name: "Start", id: "start", type: "date", onValidate: validateTextRequired},
+    {name: "End", id: "end", type: "date"},
+    {name: "Resource", id: "resource", options: resources, onValidate: validateTextRequired},
+  ];
+
+  dp.onTimeRangeSelected = function (args) {
+
+    DayPilot.Modal.form(form,data).then(args => {
+      if (!args.canceled) {
+        console.log("data", args.result);   //  {first: "Jane", last: "Doe", id: 1204}
+      }
+    })
+
+    // DayPilot.Modal.prompt("Create a new Meal:", "Meal").then(function (modal) {
+    //   // var test =[[${text}]]
+    //   // console.log({test})
+    //
+    //   var dp = args.control;
+    //   dp.clearSelection();
+    //   if (!modal.result) {
+    //     return;
+    //   }
+    //   var params = {
+    //     start: args.start.toString(),
+    //     end: args.end.toString(),
+    //     text: modal.result
+    //   };
+    //   DayPilot.Http.ajax({
+    //     url: '/api/meal_plan/create',
+    //     data: params,
+    //     success: function (ajax) {
+    //       var data = ajax.data;
+    //       dp.events.add(new DayPilot.Event(data));
+    //       dp.message("Meal created");
+    //     },
+    //     error: function (ajax){
+    //       dp.message("error creating");
+    //     }
+    //   });
+    // });
+  };
+  dp.onEventMove = function (args) {
+
+    var params = {
+      id: args.e.id(),
+      start: args.newStart.toString(),
+      end: args.newEnd.toString()
+    };
+    DayPilot.Http.ajax({
+      url: '/api/events/move',
+      data: params,
+      success: function (ajax) {
+        dp.message("Event moved");
+      }
+    });
+  };
+  dp.onEventResize = function (args) {
+    var params = {
+      id: args.e.id(),
+      start: args.newStart.toString(),
+      end: args.newEnd.toString()
+    };
+    DayPilot.Http.ajax({
+      url: '/api/events/move',
+      data: params,
+      success: function (ajax) {
+        dp.message("Event resized");
+      }
+    });
+  };
+  dp.onBeforeEventRender = function(args) {
+    args.data.barColor = args.data.color;
+    args.data.areas = [
+      { top: 2, right: 2, icon: "icon-triangle-down", visibility: "Visible", action: "ContextMenu", style: "font-size: 12px; background-color: #f9f9f9; border: 1px solid #ccc; padding: 2px 2px 0px 2px; cursor:pointer;"}
+    ];
+  };
+  dp.contextMenu = new DayPilot.Menu({
+    items: [
+      {
+        text: "Blue",
+        icon: "icon icon-blue",
+        color: "#1066a8",
+        onClick: function(args) { updateColor(args.source, args.item.color); }
+      },
+      {
+        text: "Green",
+        icon: "icon icon-green",
+        color: "#6aa84f",
+        onClick: function(args) { updateColor(args.source, args.item.color); }
+      },
+      {
+        text: "Yellow",
+        icon: "icon icon-yellow",
+        color: "#f1c232",
+        onClick: function(args) { updateColor(args.source, args.item.color); }
+      },
+      {
+        text: "Red",
+        icon: "icon icon-red",
+        color: "#cc0000",
+        onClick: function(args) { updateColor(args.source, args.item.color); }
+      },
+
+    ]
+  });
+  dp.init();
+
+  dp.events.load("/api/meal_plan");
+
+
+  function updateColor(e, color) {
+    var params = {
+      id: e.id(),
+      color: color
+    };
+    DayPilot.Http.ajax({
+      url: '/api/events/setColor',
+      data: params,
+      success: function (ajax) {
+        e.data.color = color;
+        dp.events.update(e);
+        dp.message("Color updated");
+      }
+    });
+  }
+
+</script>
+</body>
+
+
+<div th:replace="fragments/footer.html::footer"></div>
+</html>

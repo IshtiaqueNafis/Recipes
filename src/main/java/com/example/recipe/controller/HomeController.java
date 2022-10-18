@@ -2,7 +2,6 @@ package com.example.recipe.controller;
 
 import com.example.recipe.dto.CommentDto;
 import com.example.recipe.dto.RecipeDto;
-import com.example.recipe.models.Comment;
 import com.example.recipe.services.CommentService;
 import com.example.recipe.services.RecipeService;
 import lombok.AllArgsConstructor;
@@ -47,12 +46,13 @@ public class HomeController {
         return "view_recipe";
 
     }
+
     @PostMapping("/{recipeId}/comments")
-    public String createComments(@PathVariable("recipeId") long recipeId, @Valid @ModelAttribute("comment") CommentDto commentDto, BindingResult result,Model model) {
+    public String createComments(@PathVariable("recipeId") long recipeId, @Valid @ModelAttribute("comment") CommentDto commentDto, BindingResult result, Model model) {
 
         RecipeDto recipeDto = recipeService.findRecipeById(recipeId);
-        if(result.hasErrors()){
-            model.addAttribute("recipe",recipeDto);
+        if (result.hasErrors()) {
+            model.addAttribute("recipe", recipeDto);
             model.addAttribute("comment", commentDto);
             return "view_recipe";
         }
@@ -60,6 +60,15 @@ public class HomeController {
         commentService.createComment(recipeId, commentDto);
         return "redirect:/recipe_details/" + recipeId;
 
+    }
+
+    @GetMapping("/meal_plan")
+    public String ViewMealPlan(Model model) {
+
+        String text = "nafis";
+        model.addAttribute("text", text);
+
+        return "meal_plan";
     }
 
 }
