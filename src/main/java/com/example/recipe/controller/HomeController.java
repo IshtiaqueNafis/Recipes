@@ -2,8 +2,11 @@ package com.example.recipe.controller;
 
 import com.example.recipe.dto.CommentDto;
 import com.example.recipe.dto.RecipeDto;
+import com.example.recipe.models.User;
+import com.example.recipe.repository.UserRepository;
 import com.example.recipe.services.CommentService;
 import com.example.recipe.services.RecipeService;
+import com.example.recipe.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +25,7 @@ public class HomeController {
 
     private RecipeService recipeService;
     private CommentService commentService;
+    private UserRepository userRepository;
 
     @GetMapping(path = {"/", "/search"})
     public String home(Model model, String query) {
@@ -70,5 +74,6 @@ public class HomeController {
 
         return "meal_plan";
     }
+
 
 }

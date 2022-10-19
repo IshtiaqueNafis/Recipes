@@ -23,7 +23,7 @@ public class MealPlanImpl implements MealPlanService {
 
     @Override
     public List<MealPlanner> getMealPlans(LocalDateTime start, LocalDateTime end) {
-        return (List<MealPlanner>) mealPlannerRepository.findBetween(start, end);
+        return mealPlannerRepository.findBetween(start, end);
     }
 
     @Override
