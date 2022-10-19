@@ -66,7 +66,7 @@ public class HomeController {
     public String ViewMealPlan(Model model) {
 
         String text = "nafis";
-        model.addAttribute("text", text);
+        model.addAttribute("recipes",recipeService.getAllRecipes());
 
         return "meal_plan";
     }

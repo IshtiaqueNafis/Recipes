@@ -19,4 +19,5 @@ public interface RecipeService {
     List<RecipeDto> searchRecipes(String query);
     List<RecipeDto> findRecipeByUser();
 
+
 }

@@ -18,4 +18,6 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     List<Recipe>findRecipesByUser(Long userId);
 
 
+    @Override
+    Optional<Recipe> findById(Long aLong);
 }

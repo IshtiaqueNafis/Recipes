@@ -1,5 +1,6 @@
 package com.example.recipe.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,18 @@ public class MealPlanner {
     @Column(name = "end_time")
     private LocalDateTime end;
     private String text;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "created_by", nullable = false)
+    private User user;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "recipe_id", nullable = false)
+    private Recipe recipe;
+
+//    @ManyToOne
+//    @JoinColumn(name = "recipe_id", nullable = false)
+//    private Recipe recipe;
 }
