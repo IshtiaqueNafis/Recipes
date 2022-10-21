@@ -12,9 +12,9 @@ public class CommentMapper {
         return CommentDto.builder()
                 .id(comment.getId())
                 .name(comment.getName())
-                .email(comment.getEmail())
                 .content(comment.getContent())
                 .createdOn(comment.getCreatedOn())
+                .rating(comment.getRating())
                 .updatedOn(comment.getUpdatedOn()).build();
     }
 
@@ -23,7 +23,7 @@ public class CommentMapper {
         return Comment.builder()
                 .id(commentDto.getId())
                 .name(commentDto.getName())
-                .email(commentDto.getEmail())
+                .rating(commentDto.getRating())
                 .content(commentDto.getContent())
                 .createdOn(commentDto.getCreatedOn())
                 .updatedOn(commentDto.getUpdatedOn()).build();

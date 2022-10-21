@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -33,10 +34,21 @@ public class Recipe {
     @Column(name = "name")
     private String name;
 
+    @NonNull
+    @Column(name = "recipe_type")
+    private String type;
 
-    @Column(name = "url")
-    private String url;
+    @NonNull
+    @Column(name = "difficulty_level")
+    private String difficultyLevel;
 
+    @NonNull
+    @Column(name = "is_private")
+    private boolean availability = false;
+
+    @NonNull
+    @Column(name = "calories")
+    private int calories;
 
     @Lob
     @NonNull
@@ -57,8 +69,14 @@ public class Recipe {
     private Set<Comment> comments = new HashSet<>();
 
 
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.REMOVE)
+    private Set<Favourites> favourites = new HashSet<>();
+
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;
+
+
+
 
 }

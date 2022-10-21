@@ -56,15 +56,6 @@ public class RecipeApplication implements CommandLineRunner {
         }
 
 
-        List<Recipe> recipes = new ArrayList<>();
-        recipes.add(new Recipe(1L, "chicken", "good", userRepository.findByEmail("nafu22@gmail.com")));
-        recipes.add(new Recipe(2L, "beef", "good", userRepository.findByEmail("nafu22@gmail.com")));
-        recipes.add(new Recipe(3L, "lamb", "good", userRepository.findByEmail("nafu22@gmail.com")));
-
-
-        for (Recipe recipe : recipes) {
-            recipeRepository.save(recipe);
-        }
 
     }
 

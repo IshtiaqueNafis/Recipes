@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <div th:replace=" fragments/header.html::header"></div>
+
+</head>
+<div th:replace="fragments/header.html::navbar"></div>
+<br><br><br>
+<body>
+<div class="container">
+    <p th:text="${userDetails.email}"></p>
+    <p th:text="${userDetails.userName}"></p>
+    <p th:text="${userDetails.totalNumberOfFav}"></p>
+    <p th:text="${userDetails.totalPrivateRecipes}"></p>
+    <p th:text="${userDetails.totalNumberOfMealPlans}"></p>
+    <p th:text="${userDetails.totalRecipesCreated}"></p>
+    <p th:text="${userDetails.averageRecipeRating}"></p>
+</div>
+
+
+<div th:replace="fragments/footer.html::footer"></div>
+</body>
+</html>

@@ -26,9 +26,66 @@
                            th:field="*{name}"
 
                     >
-                    <p  th:if="${#fields.hasErrors('name')}"  class="text-danger" th:errors="*{name}"></p>
+                    <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
 
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Recipe Type</label>
+                    <select id="recipeType" class="form-select" aria-label="Default select example" th:field="*{type}">
+
+                        <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
+
+                    </select>
+                    <p th:if="${#fields.hasErrors('type')}" class="text-danger" th:errors="*{type}"></p>
+
+                </div>
+
+
+                <div class="mb-3">
+                    <label class="form-label">Recipe Difficulty</label>
+                    <select id="recipeDifficulty" class="form-select" aria-label="Default select example"
+                            th:field="*{difficultyLevel}">
+
+                        <option th:each="difficulity : ${difficulties}" th:value="${difficulity}"
+                                th:text="${difficulity}"></option>
+
+                    </select>
+                    <p th:if="${#fields.hasErrors('difficultyLevel')}" class="text-danger"
+                       th:errors="*{difficultyLevel}"></p>
+
+                </div>
+
+
+                <div class="mb-3">
+                    <label class="form-label">Make Recipe Private</label>
+                    <select id="privateOrPublic" class="form-select" aria-label="Default select example"
+                            th:field="*{availability}">
+                        <option th:value="1">Make it Private</option>
+                        <option th:value="0">Make it Public</option>
+
+                    </select>
+                    <p th:if="${#fields.hasErrors('availability')}" class="text-danger"
+                       th:errors="*{availability}"></p>
+
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Recipe Calories</label>
+
+                    <input type="number"
+                           class="form-control"
+                           id="calories"
+                           name="name"
+                           th:field="*{calories}"
+
+                    >
+
+                    </select>
+                    <p th:if="${#fields.hasErrors('calories')}" class="text-danger" th:errors="*{calories}"></p>
+
+                </div>
+
 
                 <div class="mb-3">
                     <label class="form-label">Recipe Description</label>
@@ -44,6 +101,7 @@
                     <p th:if="${#fields.hasErrors('description')}" class="text-danger" th:errors="*{description}"></p>
                 </div>
                 <input type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{createdOn}">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
 
@@ -61,18 +119,18 @@
 </body>
 
 
-
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.2.0/classic/ckeditor.js"></script>
 <script>
     ClassicEditor
-        .create( document.querySelector( '#description' ) )
-        .then( editor => {
-            console.log( editor );
-        } )
-        .catch( error => {
-            console.error( error );
-        } );
+        .create(document.querySelector('#description'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>
 
 </html>

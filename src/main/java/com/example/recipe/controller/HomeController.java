@@ -32,7 +32,7 @@ public class HomeController {
         List<RecipeDto> recipes;
         if (query == null) {
 
-            recipes = recipeService.getAllRecipes();
+            recipes = recipeService.findRecipeForHomePage();
         } else {
             recipes = recipeService.searchRecipes(query);
         }
@@ -69,7 +69,6 @@ public class HomeController {
     @GetMapping("/meal_plan")
     public String ViewMealPlan(Model model) {
 
-        String text = "nafis";
         model.addAttribute("recipes",recipeService.getAllRecipes());
 
         return "meal_plan";

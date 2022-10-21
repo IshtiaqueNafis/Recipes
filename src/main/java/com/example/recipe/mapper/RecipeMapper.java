@@ -11,21 +11,31 @@ public class RecipeMapper {
         return RecipeDto.builder()
                 .id(recipe.getId())
                 .name(recipe.getName())
-                .url(recipe.getUrl())
                 .description(recipe.getDescription())
                 .createdOn(recipe.getCreatedOn())
                 .comments(recipe.getComments().stream().map((comment) -> CommentMapper.mapToCommentDto(comment)).collect(Collectors.toSet()))
-                .updatedOn(recipe.getUpdatedOn()).build();
+                .updatedOn(recipe.getUpdatedOn())
+                .type(recipe.getType())
+                .difficultyLevel(recipe.getDifficultyLevel())
+                .availability(recipe.isAvailability())
+                .calories(recipe.getCalories())
+
+
+                .build();
     }
 
     public Recipe mapToRecipe(RecipeDto recipeDto) {
         return Recipe.builder()
                 .id(recipeDto.getId())
                 .name(recipeDto.getName())
-                .url(recipeDto.getUrl())
                 .description(recipeDto.getDescription())
                 .createdOn(recipeDto.getCreatedOn())
                 .comments(recipeDto.getComments().stream().map((commentDto) -> CommentMapper.mapToComment(commentDto)).collect(Collectors.toSet()))
-                .updatedOn(recipeDto.getUpdatedOn()).build();
+                .updatedOn(recipeDto.getUpdatedOn())
+                .difficultyLevel(recipeDto.getDifficultyLevel())
+                .availability(recipeDto.isAvailability())
+                .calories(recipeDto.getCalories())
+                .type(recipeDto.getType())
+                .build();
     }
 }

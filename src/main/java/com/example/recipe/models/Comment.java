@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 
@@ -22,8 +23,9 @@ public class Comment {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
-    private String email;
+
+
+    private int rating;
 
     @Column(nullable = false)
     @Lob
@@ -34,6 +36,6 @@ public class Comment {
     private LocalDateTime updatedOn;
 
     @ManyToOne
-    @JoinColumn(name = "recipe_id",nullable = false)
+    @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
 }

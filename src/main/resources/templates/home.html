@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <meta charset="UTF-8">
@@ -44,6 +45,9 @@
                             </p>
                             <a class="btn btn-primary" th:href="@{/recipe_details/{id}(id=${recipe.id})}">View
                                 Details</a>
+
+                            <a th:href="@{/registered/recipes/favourites/add/{id}(id=${recipe.id})}" sec:authorize="isAuthenticated()" class="btn btn-primary">Add to
+                                favourites</a>
                         </div>
                     </div>
                 </div>

@@ -2,16 +2,26 @@ package com.example.recipe.controller;
 
 import com.example.recipe.dto.CommentDto;
 import com.example.recipe.dto.RecipeDto;
+import com.example.recipe.models.Favourites;
+import com.example.recipe.models.Recipe;
+import com.example.recipe.models.UserDetails;
 import com.example.recipe.services.CommentService;
+import com.example.recipe.services.FavoriteService;
 import com.example.recipe.services.RecipeService;
+import com.example.recipe.services.UserService;
+import com.example.recipe.utils.SelectOptions;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -21,11 +31,16 @@ public class RecipeController {
     private RecipeService recipeService;
     private CommentService commentService;
 
+    private UserService userService;
+    private FavoriteService favoriteService;
+
 
     @GetMapping(value = {"/registered/recipe_form", "registered/recipe_form/{id}"})
     public String newRecipeForm(Model model, @PathVariable(value = "id", required = false) Long id) {
 
         model.addAttribute("recipe", recipeService.findRecipeById(id));
+        model.addAttribute("difficulties", SelectOptions.DIFFICULTY);
+        model.addAttribute("types", SelectOptions.MEALTYPE);
         return "registered/recipe_form";
     }
 
@@ -35,15 +50,18 @@ public class RecipeController {
 
         if (result.hasErrors()) {
             model.addAttribute("recipe", recipeDto);
+            model.addAttribute("difficulties", SelectOptions.DIFFICULTY);
+            model.addAttribute("types", SelectOptions.MEALTYPE);
             return "registered/recipe_form";
         }
+
         recipeService.submitRecipe(recipeDto);
+
+
         return "redirect:/registered/recipes";
 
 
     }
-
-
 
 
     //show list of comment request.
@@ -71,5 +89,45 @@ public class RecipeController {
         return "registered/comments";
     }
 
+    @GetMapping("/registered/recipes/av/{id}")
+    public String makeRecipePublicOrPrivate(@PathVariable("id") long id) {
+        RecipeDto recipeDto = recipeService.findRecipeById(id);
+
+
+        recipeDto.setAvailability(!recipeDto.isAvailability());
+        if(recipeDto.isAvailability()){
+            recipeService.updateRecipeForOtherUser(recipeDto.getId());
+        }
+        recipeService.updateRecipe(recipeDto);
+        return "redirect:/registered/recipes";
+    }
+
+    @GetMapping("/registered/recipes/favourites")
+    public String getRecipeFavourites(Model model) {
+        var fav = favoriteService.getUserFavourites();
+
+
+        model.addAttribute("fav", fav);
+        return "registered/favourites";
+    }
+
+    @GetMapping("/registered/recipes/favourites/add/{id}")
+    public String AddToFavourites(@PathVariable("id") long id) {
+        favoriteService.AddFavorites(id);
+        return "redirect:/registered/recipes/favourites";
+    }
+
+    @GetMapping("/registered/recipes/favourites/remove/{id}")
+    public String RemoveFromFavourites(@PathVariable("id") long id) {
+        favoriteService.RemoveFavorites(id);
+        return "redirect:/registered/recipes/favourites";
+    }
+
+    @GetMapping("/registered/recipes/myprofile")
+    public String MyProfile(Model model){
+        UserDetails usersDetails = userService.userDetails();
+        model.addAttribute("userDetails", usersDetails);
+        return "registered/myprofile";
+    }
 
 }

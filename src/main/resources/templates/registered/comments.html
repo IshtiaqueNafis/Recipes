@@ -30,7 +30,6 @@
         <tr th:each="comment,commentStrat:${comments}">
 
             <td th:text="${commentStrat.count}"></td>
-            <td th:text="${comment.email}"></td>
             <td th:text="${comment.content}"></td>
             <td th:text="${#temporals.format(comment.createdOn, 'dd MMM yyyy')}"></td>
             <td>

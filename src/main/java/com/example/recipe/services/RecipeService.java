@@ -19,5 +19,9 @@ public interface RecipeService {
     List<RecipeDto> searchRecipes(String query);
     List<RecipeDto> findRecipeByUser();
 
+    List<RecipeDto> findRecipeForHomePage();
+
+    void updateRecipeForOtherUser(Long id);
+
 
 }

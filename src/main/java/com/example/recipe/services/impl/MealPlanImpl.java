@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -23,7 +24,11 @@ public class MealPlanImpl implements MealPlanService {
 
     @Override
     public List<MealPlanner> getMealPlans(LocalDateTime start, LocalDateTime end) {
-        return mealPlannerRepository.findBetween(start, end);
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User user = userRepository.findByEmail(email);
+        Long UserId = user.getId();
+        List<MealPlanner> mealPlan = mealPlannerRepository.findBetween(start, end);
+        return mealPlan.stream().filter(u -> u.getUser().getId() == UserId).collect(Collectors.toList());
     }
 
     @Override
@@ -37,6 +42,7 @@ public class MealPlanImpl implements MealPlanService {
         mealPlanner.setEnd(end);
         mealPlanner.setRecipe(recipe);
         mealPlannerRepository.save(mealPlanner);
+
     }
 
 
@@ -70,9 +76,9 @@ public class MealPlanImpl implements MealPlanService {
 
     @Override
     public Long getRecipeInfo(Long id) {
-        MealPlanner mealPlanner =mealPlannerRepository.findById(id).get();
-         var recipe= recipeRepository.findById(mealPlanner.getRecipe().getId()).get();
-         return recipe.getId();
+        MealPlanner mealPlanner = mealPlannerRepository.findById(id).get();
+        var recipe = recipeRepository.findById(mealPlanner.getRecipe().getId()).get();
+        return recipe.getId();
 
     }
 

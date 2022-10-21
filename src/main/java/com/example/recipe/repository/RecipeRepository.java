@@ -8,14 +8,17 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
-    Optional<Recipe> findByUrl(String url);
 
-    @Query("SELECT r from Recipe r WHERE  r.name LIKE concat('%',:query,'%') OR  r.description like concat('%',:query,'%')"
+
+    @Query("SELECT r from Recipe r WHERE  r.name LIKE concat('%',:query,'%') OR  r.description like concat('%',:query,'%') AND r.availability=true"
     )
     List<Recipe> searchRecipes(String query);
 
-    @Query(value = "SELECT * FROM recipes r where r.created_by  = :userId" ,nativeQuery = true)
-    List<Recipe>findRecipesByUser(Long userId);
+    @Query(value = "SELECT * FROM recipes r where r.created_by  = :userId", nativeQuery = true)
+    List<Recipe> findRecipesByUser(Long userId);
+
+    @Query(value = "SELECT * FROM recipes r where  r.is_private=false", nativeQuery = true)
+    List<Recipe> findRecipesPublic();
 
 
     @Override

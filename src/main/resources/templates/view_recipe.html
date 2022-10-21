@@ -24,6 +24,7 @@
                 <p>dateCreated:<b><strong th:text="${#temporals.format(comment.createdOn,'dd MMM yyyy')}"></strong></b>
                 </p>
                 <p>content:<b><strong th:text="${comment.content}"></strong></b></p>
+                <p>rating:<b><strong th:text="${comment.rating}"></strong></b></p>
             </div>
         </div>
 
@@ -52,18 +53,21 @@
                         <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></p>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-5 mb-3">
-                            <input
-                                    class="form-control"
-                                    id="email"
-                                    name="name"
-                                    placeholder="Enter Email"
-                                    th:field="*{email}"
-                                    type="text"
-                            />
-                        </div>
-                        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></p>
+
+                    <div class="mb-3">
+                        <label class="form-label">Please choose a rating for the recipe</label>
+                        <select id="privateOrPublic" class="form-select" aria-label="Default select example"
+                                th:field="*{rating}">
+                            <option th:value="1">1-The Worst </option>
+                            <option th:value="2">2-Bad</option>
+                            <option th:value="3">3-Ok</option>
+                            <option th:value="4">4-Good</option>
+                            <option th:value="5">2-Excellent</option>
+
+                        </select>
+                        <p th:if="${#fields.hasErrors('rating')}" class="text-danger"
+                           th:errors="*{rating}"></p>
+
                     </div>
 
                     <div class="row">
@@ -77,7 +81,7 @@
                                   th:field="*{content}"
                           >
                           </textarea>
-                            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}0" class="text-danger"></p>
+                            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-danger"></p>
                         </div>
 
                         <div class="row">
