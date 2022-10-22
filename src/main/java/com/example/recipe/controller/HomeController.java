@@ -2,11 +2,9 @@ package com.example.recipe.controller;
 
 import com.example.recipe.dto.CommentDto;
 import com.example.recipe.dto.RecipeDto;
-import com.example.recipe.models.User;
 import com.example.recipe.repository.UserRepository;
 import com.example.recipe.services.CommentService;
 import com.example.recipe.services.RecipeService;
-import com.example.recipe.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,15 +25,19 @@ public class HomeController {
     private CommentService commentService;
     private UserRepository userRepository;
 
-    @GetMapping(path = {"/", "/search"})
-    public String home(Model model, String query) {
+    @GetMapping(path = {"/", "/search", "/filter/{filter}"})
+    public String home(Model model, String query, @PathVariable(required = false, name = "filter") String filter) {
         List<RecipeDto> recipes;
-        if (query == null) {
-
+        if (query == null && filter == null) {
             recipes = recipeService.findRecipeForHomePage();
+        } else if (query == null && filter != null) {
+            recipes=    recipeService.findRecipeBasedOnFilter(filter);
+
         } else {
             recipes = recipeService.searchRecipes(query);
         }
+
+
         model.addAttribute("recipes", recipes);
         model.addAttribute("query", query);
         return "home";
@@ -69,7 +71,7 @@ public class HomeController {
     @GetMapping("/meal_plan")
     public String ViewMealPlan(Model model) {
 
-        model.addAttribute("recipes",recipeService.getAllRecipes());
+        model.addAttribute("recipes", recipeService.getAllRecipes());
 
         return "meal_plan";
     }

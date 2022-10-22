@@ -21,6 +21,8 @@ public interface RecipeService {
 
     List<RecipeDto> findRecipeForHomePage();
 
+    List<RecipeDto> findRecipeBasedOnFilter(String filter);
+
     void updateRecipeForOtherUser(Long id);
 
 

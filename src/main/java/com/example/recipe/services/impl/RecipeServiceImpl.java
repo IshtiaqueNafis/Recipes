@@ -13,9 +13,12 @@ import com.example.recipe.repository.UserRepository;
 import com.example.recipe.services.RecipeService;
 import com.example.recipe.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,7 +40,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public void createRecipe(RecipeDto recipeDto) {
         Recipe recipe = new RecipeMapper().mapToRecipe(recipeDto);
-        String email = SecurityUtils.getCurrentUser().getUsername();
+        String email = Objects.requireNonNull(SecurityUtils.getCurrentUser()).getUsername();
         User user = userRepository.findByEmail(email);
         recipe.setCreatedBy(user);
         recipeRepository.save(recipe);
@@ -100,6 +103,31 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<RecipeDto> findRecipeForHomePage() {
         List<Recipe> recipes = recipeRepository.findRecipesPublic();
+        return recipes.stream().map(recipe -> new RecipeMapper().mapToRecipeDto(recipe)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RecipeDto> findRecipeBasedOnFilter(String filter) {
+        List<Recipe> recipes = new ArrayList<>();
+        if (filter.equals("Easy") || filter.equals("Hard") || filter.equals("Medium")) {
+            recipes = recipeRepository.findByDifficultyLevel(filter);
+        } else if (filter.equals("Breakfast") || filter.equals("Dinner") || filter.equals("Lunch")) {
+            recipes = recipeRepository.findByType(filter);
+        } else if (filter.equals("High") || filter.equals("Low")) {
+
+            if (filter.equals("High")) {
+                recipes = recipeRepository.findAll(Sort.by(Sort.Direction.DESC, "calories"));
+            } else {
+                recipes = recipeRepository.findAll(Sort.by(Sort.Direction.ASC, "calories"));
+            }
+
+        } else {
+            if (filter.equals("Date Asc")) {
+                recipes = recipeRepository.findAll(Sort.by(Sort.Direction.ASC, "created_on"));
+            } else {
+                recipes = recipeRepository.findAll(Sort.by(Sort.Direction.DESC, "created_on"));
+            }
+        }
         return recipes.stream().map(recipe -> new RecipeMapper().mapToRecipeDto(recipe)).collect(Collectors.toList());
     }
 
