@@ -10,29 +10,47 @@
 <div th:replace="fragments/header.html::navbar"></div>
 <br><br><br>
 <body>
-
-<table class="table table-bordered table-striped" id="recipesTable">
-    <thead class="table-dark">
-    <th>#</th>
-    <th>Recipe name</th>
-    <th>Calories</th>
-    <th>Created on</th>
-    <th>Actions</th>
-    </thead>
-    <tbody th:each="f,recipeStats:${fav}">
-    <td th:text="${recipeStats.count}"></td>
-    <td th:text="${f.recipe.name}"></td>
-    <td th:text="${f.recipe.calories}"></td>
-    <td th:text="${#temporals.format(f.recipe.createdOn,'dd MMM yyyy')}"></td>
-    <td>
-        <a th:href="@{/registered/recipes/favourites/remove/{id}(id=${f.id})}" class="btn btn-primary" >Remove from favourites</a>
-
-    </td>
-
-    </tbody>
-</table>
+<div class="container">
 
 
+    <table class="table table-bordered table-striped" id="favTable">
+        <thead class="table-dark">
+        <tr>
+            <th>Recipe name</th>
+            <th>Calories</th>
+            <th>Created on</th>
+            <th>Actions</th>
+        </tr>
+
+        </thead>
+
+        <tbody >
+        <tr th:each="f:${fav}">
+            <td th:text="${f.recipe.name}"></td>
+            <td th:text="${f.recipe.calories}"></td>
+            <td th:text="${#temporals.format(f.recipe.createdOn,'dd MMM yyyy')}"></td>
+            <td>
+                <a th:href="@{/registered/recipes/favourites/remove/{id}(id=${f.id})}" class="btn btn-primary">Remove
+                    from
+                    favourites</a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#favTable").DataTable({
+            'aoColumnDefs': [{
+                'bSortable': false,
+                'aTargets': [-1] /* 1st one, start by the right */
+            }]
+        });
+    })
+</script>
 
 <div th:replace="fragments/footer.html::footer"></div>
 </body>

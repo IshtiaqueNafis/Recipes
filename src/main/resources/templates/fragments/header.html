@@ -45,44 +45,55 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link active" aria-current="page" th:href="@{/registered/recipes}">Recipes</a>
-                </li>
-
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link active" aria-current="page" th:href="@{/registered/recipe_form}">New Recipes</a>
-                </li>
-
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link active" aria-current="page" th:href="@{/registered/comments}">Ratings</a>
-                </li>
-
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link active" aria-current="page" th:href="@{/registered/recipes/favourites}">Favourites</a>
-                </li>
 
                 <li class="nav-item" sec:authorize="!isAuthenticated()">
                     <a class="nav-link active" aria-current="page" th:href="@{/auth/register}">Register</a>
                 </li>
 
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <a class="nav-link active" aria-current="page" th:href="@{/logout} ">Log out</a>
-                </li>
 
                 <li class="nav-item" sec:authorize="!isAuthenticated()">
                     <a class="nav-link active" aria-current="page" th:href="@{/auth/loginForm}">Log In</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link active" sec:authorize="isAuthenticated()" aria-current="page"
-                       th:href="@{/meal_plan}">Meal Plan</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" sec:authorize="isAuthenticated()" aria-current="page"
-                       th:href="@{/registered/recipes/myprofile}">My Profile</a>
-                </li>
 
+                <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                    <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown"
+                            role="button"
+                            data-mdb-toggle="dropdown"
+                            aria-expanded="false"
+                    >
+                        My Account
+                    </a>
+                    <!-- Dropdown menu -->
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link active" aria-current="page" th:href="@{/registered/recipes}">Recipes</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link active" aria-current="page" th:href="@{/registered/comments}">Ratings</a>
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link active" aria-current="page" th:href="@{/registered/recipes/favourites}">Favourites</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" sec:authorize="isAuthenticated()" aria-current="page"
+                               th:href="@{/meal_plan}">Meal Plan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" sec:authorize="isAuthenticated()" aria-current="page"
+                               th:href="@{/registered/recipes/myprofile}">My Profile</a>
+                        </li>
 
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link active" aria-current="page" th:href="@{/logout} ">Log out</a>
+                        </li>
+
+                    </ul>
+                </li>
             </ul>
 
         </div>
