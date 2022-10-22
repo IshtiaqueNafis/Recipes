@@ -2,6 +2,7 @@ package com.example.recipe.controller;
 
 import com.example.recipe.dto.CommentDto;
 import com.example.recipe.dto.RecipeDto;
+import com.example.recipe.exception.NotFoundException;
 import com.example.recipe.repository.UserRepository;
 import com.example.recipe.services.CommentService;
 import com.example.recipe.services.RecipeService;
@@ -31,7 +32,7 @@ public class HomeController {
         if (query == null && filter == null) {
             recipes = recipeService.findRecipeForHomePage();
         } else if (query == null && filter != null) {
-            recipes=    recipeService.findRecipeBasedOnFilter(filter);
+            recipes = recipeService.findRecipeBasedOnFilter(filter);
 
         } else {
             recipes = recipeService.searchRecipes(query);
@@ -45,26 +46,39 @@ public class HomeController {
 
     @GetMapping(value = "recipe_details/{id}")
     public String viewRecipeDetails(@PathVariable("id") long id, Model model) {
-        RecipeDto recipeDto = recipeService.findRecipeById(id);
-        model.addAttribute("recipe", recipeDto);
-        CommentDto commentdto = new CommentDto();
-        model.addAttribute("comment", commentdto);
-        return "view_recipe";
+        RecipeDto recipeDto = null;
+        try {
+            recipeDto = recipeService.findRecipeById(id);
+            model.addAttribute("recipe", recipeDto);
+            CommentDto commentdto = new CommentDto();
+            model.addAttribute("comment", commentdto);
+            return "view_recipe";
+        } catch (NotFoundException e) {
+            return "error";
+        }
+
 
     }
 
     @PostMapping("/{recipeId}/comments")
     public String createComments(@PathVariable("recipeId") long recipeId, @Valid @ModelAttribute("comment") CommentDto commentDto, BindingResult result, Model model) {
 
-        RecipeDto recipeDto = recipeService.findRecipeById(recipeId);
-        if (result.hasErrors()) {
-            model.addAttribute("recipe", recipeDto);
-            model.addAttribute("comment", commentDto);
-            return "view_recipe";
+
+        RecipeDto recipeDto = null;
+        try {
+            recipeDto = recipeService.findRecipeById(recipeId);
+            if (result.hasErrors()) {
+                model.addAttribute("recipe", recipeDto);
+                model.addAttribute("comment", commentDto);
+                return "view_recipe";
+            }
+
+            commentService.createComment(recipeId, commentDto);
+            return "redirect:/recipe_details/" + recipeId;
+        } catch (NotFoundException e) {
+            throw new RuntimeException(e);
         }
 
-        commentService.createComment(recipeId, commentDto);
-        return "redirect:/recipe_details/" + recipeId;
 
     }
 

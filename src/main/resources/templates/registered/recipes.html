@@ -3,6 +3,8 @@
       xmlns:th="http://www.thymeleaf.org"
 
       xmlns="">
+
+
 <div th:replace="fragments/header.html::header"></div>
 <body>
 <div th:replace="fragments/header.html::navbar"></div>
@@ -16,35 +18,37 @@
 
     <table class="table table-bordered table-striped" id="recipesTable">
         <thead class="table-dark">
-        <th>#Recipe name</th>
+        <tr>
+        <th>Recipe name</th>
         <th>Calories</th>
         <th>Created on</th>
         <th>Ratings</th>
         <th>Actions</th>
+        </tr>
         </thead>
-        <tbody th:each="recipe,recipeStats:${recipes}">
-        <td th:text="${recipeStats.count}"></td>
+        <tbody >
+        <tr th:each="recipe:${recipes}">
         <td th:text="${recipe.name}"></td>
         <td th:text="${recipe.calories}"></td>
         <td th:text="${#temporals.format(recipe.createdOn,'dd MMM yyyy')}"></td>
-
         <td th:text="${recipe.comments.size()>0}? ${recipe.getCommentRatings()}:'No ratings yet' "></td>
+
         <td>
-            <a th:href="@{/registered/recipe_form/{id}(id=${recipe.id})}" class="btn btn-primary">Edit</a>
-            <a th:href="@{/recipe_details/{id}(id=${recipe.id})}" class="btn btn-primary">View Details</a>
-            <a th:href="@{/registered/recipes/av/{id}(id=${recipe.id})}" class="btn btn-primary"
+            <a th:href="@{/registered/recipe_form/{id}(id=${recipe.id})}" class="btn text-white" style="background-color: #ac2bac;"><i class="fas fa-pencil-alt"></i></a>
+            <a th:href="@{/recipe_details/{id}(id=${recipe.id})}" class="btn text-white" style="background-color: #481449;"><i class="fas fa-info"></i></a>
+            <a th:href="@{/registered/recipes/av/{id}(id=${recipe.id})}" class="btn text-white" style="background-color: #ec4a89;"
                th:text="${recipe.availability?'avilable':'not public'}"></a>
-            <a th:href="@{/registered/recipes/favourites/add/{id}(id=${recipe.id})}" class="btn btn-primary">Add to
-                favourites</a>
+            <a th:href="@{/registered/recipes/favourites/add/{id}(id=${recipe.id})}" class="btn text-white" style="background-color: #ff4500;"><i class="fas fa-heart"></i></a>
         </td>
 
+        </tr>
         </tbody>
     </table>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $("#recipesTable").DataTable({
             'aoColumnDefs': [{
                 'bSortable': false,

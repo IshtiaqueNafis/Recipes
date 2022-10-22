@@ -1,5 +1,6 @@
 package com.example.recipe.services.impl;
 
+import com.example.recipe.exception.AlreadyOnFavException;
 import com.example.recipe.models.Favourites;
 import com.example.recipe.models.Recipe;
 import com.example.recipe.models.User;
@@ -24,10 +25,18 @@ public class FavoriteServiceImpl implements FavoriteService {
 
 
     @Override
-    public void AddFavorites(Long recipeId) {
+    public void AddFavorites(Long recipeId) throws AlreadyOnFavException {
         String email = SecurityUtils.getCurrentUser().getUsername();
         User user = userRepository.findByEmail(email);
         Recipe recipe = recipeRepository.findById(recipeId).get();
+        var favouritsList = favouritesRepository.findAll();
+
+        for (var favourite :favouritsList){
+            if(favourite.getRecipe().getId()==recipeId && favourite.getUser().getId()==user.getId()){
+                throw new AlreadyOnFavException();
+            }
+        }
+
         Favourites favourites = new Favourites();
         favourites.setUser(user);
         favourites.setRecipe(recipe);

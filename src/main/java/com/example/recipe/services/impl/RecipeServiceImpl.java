@@ -1,6 +1,7 @@
 package com.example.recipe.services.impl;
 
 import com.example.recipe.dto.RecipeDto;
+import com.example.recipe.exception.NotFoundException;
 import com.example.recipe.mapper.RecipeMapper;
 import com.example.recipe.models.Favourites;
 import com.example.recipe.models.MealPlanner;
@@ -59,7 +60,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public RecipeDto findRecipeById(Long recipeId) {
+    public RecipeDto findRecipeById(Long recipeId) throws NotFoundException {
 
         if (recipeId == null) {
             return new RecipeDto();
@@ -123,9 +124,9 @@ public class RecipeServiceImpl implements RecipeService {
 
         } else {
             if (filter.equals("Date Asc")) {
-                recipes = recipeRepository.findAll(Sort.by(Sort.Direction.ASC, "created_on"));
+                recipes = recipeRepository.findAll(Sort.by(Sort.Direction.ASC, "createdOn"));
             } else {
-                recipes = recipeRepository.findAll(Sort.by(Sort.Direction.DESC, "created_on"));
+                recipes = recipeRepository.findAll(Sort.by(Sort.Direction.DESC, "createdOn"));
             }
         }
         return recipes.stream().map(recipe -> new RecipeMapper().mapToRecipeDto(recipe)).collect(Collectors.toList());

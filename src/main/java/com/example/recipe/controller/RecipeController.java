@@ -2,8 +2,8 @@ package com.example.recipe.controller;
 
 import com.example.recipe.dto.CommentDto;
 import com.example.recipe.dto.RecipeDto;
-import com.example.recipe.models.Favourites;
-import com.example.recipe.models.Recipe;
+import com.example.recipe.exception.AlreadyOnFavException;
+import com.example.recipe.exception.NotFoundException;
 import com.example.recipe.models.UserDetails;
 import com.example.recipe.services.CommentService;
 import com.example.recipe.services.FavoriteService;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -38,10 +37,15 @@ public class RecipeController {
     @GetMapping(value = {"/registered/recipe_form", "registered/recipe_form/{id}"})
     public String newRecipeForm(Model model, @PathVariable(value = "id", required = false) Long id) {
 
-        model.addAttribute("recipe", recipeService.findRecipeById(id));
-        model.addAttribute("difficulties", SelectOptions.DIFFICULTY);
-        model.addAttribute("types", SelectOptions.MEALTYPE);
-        return "registered/recipe_form";
+        try {
+            model.addAttribute("recipe", recipeService.findRecipeById(id));
+            model.addAttribute("difficulties", SelectOptions.DIFFICULTY);
+            model.addAttribute("types", SelectOptions.MEALTYPE);
+            return "registered/recipe_form";
+        } catch (NotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     //handler method to handle submit request
@@ -91,40 +95,54 @@ public class RecipeController {
 
     @GetMapping("/registered/recipes/av/{id}")
     public String makeRecipePublicOrPrivate(@PathVariable("id") long id) {
-        RecipeDto recipeDto = recipeService.findRecipeById(id);
-
-
-        recipeDto.setAvailability(!recipeDto.isAvailability());
-        if(recipeDto.isAvailability()){
-            recipeService.updateRecipeForOtherUser(recipeDto.getId());
+        RecipeDto recipeDto = null;
+        try {
+            recipeDto = recipeService.findRecipeById(id);
+            recipeDto.setAvailability(!recipeDto.isAvailability());
+            if (recipeDto.isAvailability()) {
+                recipeService.updateRecipeForOtherUser(recipeDto.getId());
+            }
+            recipeService.updateRecipe(recipeDto);
+            return "redirect:/registered/recipes";
+        } catch (NotFoundException e) {
+            return "error";
         }
-        recipeService.updateRecipe(recipeDto);
-        return "redirect:/registered/recipes";
+
+
     }
 
     @GetMapping("/registered/recipes/favourites")
     public String getRecipeFavourites(Model model) {
         var fav = favoriteService.getUserFavourites();
-
-
         model.addAttribute("fav", fav);
         return "registered/favourites";
     }
 
     @GetMapping("/registered/recipes/favourites/add/{id}")
     public String AddToFavourites(@PathVariable("id") long id) {
-        favoriteService.AddFavorites(id);
-        return "redirect:/registered/recipes/favourites";
+        try {
+            favoriteService.AddFavorites(id);
+            return "redirect:/registered/recipes/favourites";
+        } catch (AlreadyOnFavException e) {
+            return "error/RecipeDuplicateError";
+        }
+
     }
 
     @GetMapping("/registered/recipes/favourites/remove/{id}")
     public String RemoveFromFavourites(@PathVariable("id") long id) {
-        favoriteService.RemoveFavorites(id);
-        return "redirect:/registered/recipes/favourites";
+
+        try {
+            favoriteService.RemoveFavorites(id);
+            return "redirect:/registered/recipes/favourites";
+        } catch (Error e) {
+            return "error";
+        }
+
     }
 
     @GetMapping("/registered/recipes/myprofile")
-    public String MyProfile(Model model){
+    public String MyProfile(Model model) {
         UserDetails usersDetails = userService.userDetails();
         model.addAttribute("userDetails", usersDetails);
         return "registered/myprofile";
