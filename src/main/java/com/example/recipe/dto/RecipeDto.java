@@ -26,6 +26,8 @@ public class RecipeDto {
     private String description;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
+
+    private String photo;
     private Set<CommentDto> comments = new HashSet<>();
     @NotBlank
     private String type;

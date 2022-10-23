@@ -1,14 +1,34 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
+<title th:text="${recipe.name}"></title>
 <div th:replace="fragments/header.html::header"></div>
 <body>
 <div th:replace="fragments/header.html::navbar"></div>
 <div class="container">
+    <br><br>
+    <div class="p-5 text-center bg-image rounded-3"
+         th:style="'background-image:url(' + ${recipe.photo} + '); height: 400px;'">
+
+        <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="text-white">
+                    <h1 class="mb-3" th:text="${recipe.name}"></h1>
+                    <h5 class="mb-3"  th:text="|Date Created: ${#temporals.format(recipe.createdOn,'dd MMM yyyy')}|">Created on</h5>
+                    <h4 class="mb-3" th:text="|Recipe Type: ${recipe.type}|"></h4>
+                    <h4 class="mb-3" th:text="|Recipe Diffulity: ${recipe.difficultyLevel}|"></h4>
+                    <h4 class="mb-3" th:text="|Recipe Calories: ${recipe.calories}|"></h4>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <h2 th:text="${recipe.name}"></h2>
             <hr>
             <div th:utext="${recipe.description}">
 
@@ -16,20 +36,51 @@
         </div>
     </div>
 
-    <div>
-        <h3>Comments:</h3>
-        <div th:each="comment: ${recipe.comments}">
-            <div>
-                <p>Name:<b><strong th:text="${comment.name}"></strong></b></p>
-                <p>dateCreated:<b><strong th:text="${#temporals.format(comment.createdOn,'dd MMM yyyy')}"></strong></b>
-                </p>
-                <p>content:<b><strong th:text="${comment.content}"></strong></b></p>
-                <p>rating:<b><strong th:text="${comment.rating}"></strong></b></p>
+
+    <section style="background-color: #f7f6f6;">
+        <div class="container my-5 py-5 text-dark">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-12 col-lg-10 col-xl-8">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="text-dark mb-0">Recipe Comments and ratings</h4>
+
+                    </div>
+
+
+
+                    <div class="card mb-3" th:each="comment: ${recipe.comments}">
+                        <div class="card-body">
+                            <div class="d-flex flex-start">
+                                <img class="rounded-circle shadow-1-strong me-3"
+                                     src="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392" alt="avatar" width="40"
+                                     height="40" />
+                                <div class="w-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h6 class="text-primary fw-bold mb-0" th:text="${comment.name}">
+                                        </h6>
+
+                                            <span class="text-dark ms-2">
+                                                <span class="text-primary"></span>
+                      <span class="text-primary" th:text="|Comment: ${comment.content}|"></span>
+                      <span class="text-primary" th:text="|Rating: ${comment.rating}|"></span>
+
+                    </span>
+                                        <p class="mb-0" th:text="${#temporals.format(comment.createdOn,'dd MMM yyyy')}"></p>
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        </div>
+    </section>
+    <div  sec:authorize="!isAuthenticated()">
+        <h3>Comments and ratings:</h3>
 
 
-        <div class="card">
+        <div class="card"  >
             <div class="card-header">
                 <h2>Leave a comment</h2>
             </div>
@@ -62,7 +113,7 @@
                             <option th:value="2">2-Bad</option>
                             <option th:value="3">3-Ok</option>
                             <option th:value="4">4-Good</option>
-                            <option th:value="5">2-Excellent</option>
+                            <option th:value="5">5-Excellent</option>
 
                         </select>
                         <p th:if="${#fields.hasErrors('rating')}" class="text-danger"

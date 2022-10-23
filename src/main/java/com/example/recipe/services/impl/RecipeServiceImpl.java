@@ -12,6 +12,7 @@ import com.example.recipe.repository.MealPlannerRepository;
 import com.example.recipe.repository.RecipeRepository;
 import com.example.recipe.repository.UserRepository;
 import com.example.recipe.services.RecipeService;
+import com.example.recipe.utils.RandomImageGenerator;
 import com.example.recipe.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -44,6 +45,7 @@ public class RecipeServiceImpl implements RecipeService {
         String email = Objects.requireNonNull(SecurityUtils.getCurrentUser()).getUsername();
         User user = userRepository.findByEmail(email);
         recipe.setCreatedBy(user);
+        recipe.setPhoto(RandomImageGenerator.randomFoodImageHolder.get(RandomImageGenerator.randomImageGeneratorFood()));
         recipeRepository.save(recipe);
     }
 
@@ -52,6 +54,7 @@ public class RecipeServiceImpl implements RecipeService {
 
         Recipe recipe = new RecipeMapper().mapToRecipe(recipeDto);
         recipe.setCreatedOn(recipeDto.getCreatedOn());
+        recipe.setPhoto(recipe.getPhoto());
         String email = SecurityUtils.getCurrentUser().getUsername();
         User user = userRepository.findByEmail(email);
         recipe.setCreatedBy(user);

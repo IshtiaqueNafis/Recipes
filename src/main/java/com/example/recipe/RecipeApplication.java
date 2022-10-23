@@ -1,12 +1,12 @@
 package com.example.recipe;
 
 import com.example.recipe.dto.RegistrationDto;
-import com.example.recipe.models.Recipe;
 import com.example.recipe.models.Role;
 import com.example.recipe.models.User;
 import com.example.recipe.repository.RecipeRepository;
 import com.example.recipe.repository.RolesRepository;
 import com.example.recipe.repository.UserRepository;
+import com.example.recipe.utils.RandomImageGenerator;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -50,11 +50,11 @@ public class RecipeApplication implements CommandLineRunner {
             user.setEmail(registrationDto.getEmail());
             user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
             user.setRoles(Arrays.asList(roles));
+            user.setPhoto(RandomImageGenerator.randomPersonHolder.get(RandomImageGenerator.randomImageGeneratorPerson()));
             userRepository.save(user);
             id++;
 
         }
-
 
 
     }

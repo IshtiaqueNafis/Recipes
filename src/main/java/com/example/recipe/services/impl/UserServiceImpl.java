@@ -6,6 +6,7 @@ import com.example.recipe.mapper.RecipeMapper;
 import com.example.recipe.models.*;
 import com.example.recipe.repository.*;
 import com.example.recipe.services.UserService;
+import com.example.recipe.utils.RandomImageGenerator;
 import com.example.recipe.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,6 +37,7 @@ public class UserServiceImpl implements UserService {
         Role role = rolesRepository.findByName("REGISTERED");
         System.out.println(role.getName());
         user.setRoles(Arrays.asList(role));
+        user.setPhoto(RandomImageGenerator.randomPersonHolder.get(RandomImageGenerator.randomImageGeneratorPerson()));
         userRepository.save(user);
     }
 
@@ -54,6 +56,7 @@ public class UserServiceImpl implements UserService {
         Long UserId = user.getId();
         userDetails.setUserName(user.getName());
         userDetails.setEmail(user.getEmail());
+        userDetails.setPhotos(user.getPhoto());
         List<Recipe> recipes = recipeRepository.findRecipesByUser(UserId);
         List<Favourites> favourites = favouritesRepository.findAll();
         List<MealPlanner> mealPlans = (List<MealPlanner>) mealPlannerRepository.findAll();

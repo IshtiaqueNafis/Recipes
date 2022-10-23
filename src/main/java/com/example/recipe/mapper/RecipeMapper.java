@@ -16,6 +16,7 @@ public class RecipeMapper {
                 .comments(recipe.getComments().stream().map((comment) -> CommentMapper.mapToCommentDto(comment)).collect(Collectors.toSet()))
                 .updatedOn(recipe.getUpdatedOn())
                 .type(recipe.getType())
+                .photo(recipe.getPhoto())
                 .difficultyLevel(recipe.getDifficultyLevel())
                 .availability(recipe.isAvailability())
                 .calories(recipe.getCalories())
@@ -34,6 +35,7 @@ public class RecipeMapper {
                 .updatedOn(recipeDto.getUpdatedOn())
                 .difficultyLevel(recipeDto.getDifficultyLevel())
                 .availability(recipeDto.isAvailability())
+                .photo(recipeDto.getPhoto())
                 .calories(recipeDto.getCalories())
                 .type(recipeDto.getType())
                 .build();

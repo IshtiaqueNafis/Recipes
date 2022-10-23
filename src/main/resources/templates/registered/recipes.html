@@ -4,16 +4,19 @@
 
       xmlns="">
 
-
+<head>
+    <title>My Recipe List</title>
+</head>
 <div th:replace="fragments/header.html::header"></div>
 <body>
 <div th:replace="fragments/header.html::navbar"></div>
 
 
 <div class="container">
-
+    <br><br>
     <div class="row">
-        <h1>My Recipe List</h1>
+
+        <h1 class="text-center">My Recipe List</h1>
     </div>
 
     <table class="table table-bordered table-striped" id="recipesTable">

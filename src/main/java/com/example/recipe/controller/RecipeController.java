@@ -145,7 +145,16 @@ public class RecipeController {
     public String MyProfile(Model model) {
         UserDetails usersDetails = userService.userDetails();
         model.addAttribute("userDetails", usersDetails);
+        String ratings = "";
+        if (usersDetails.getAverageRecipeRating() > 0) {
+            ratings = String.valueOf(usersDetails.getAverageRecipeRating());
+
+        } else {
+            ratings = "No ratings yet";
+        }
+        model.addAttribute("ratings", ratings);
         return "registered/myprofile";
     }
+
 
 }
