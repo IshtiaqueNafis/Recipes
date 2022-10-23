@@ -21,7 +21,6 @@ public class RecipeMapper {
                 .availability(recipe.isAvailability())
                 .calories(recipe.getCalories())
 
-
                 .build();
     }
 
@@ -37,6 +36,7 @@ public class RecipeMapper {
                 .availability(recipeDto.isAvailability())
                 .photo(recipeDto.getPhoto())
                 .calories(recipeDto.getCalories())
+
                 .type(recipeDto.getType())
                 .build();
     }

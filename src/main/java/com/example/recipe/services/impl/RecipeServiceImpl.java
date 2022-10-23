@@ -157,6 +157,14 @@ public class RecipeServiceImpl implements RecipeService {
 
     }
 
+    @Override
+    public User findUserFromRecipeId(Long id) {
+        var recipe = recipeRepository.findById(id).get();
+        var user = userRepository.findById(recipe.getCreatedBy().getId()).get();
+        return user;
+
+    }
+
     private static String getUrl(String recipeName) {
         String title = recipeName.trim().toLowerCase();
         String url = title.replaceAll("\\s+", "-");

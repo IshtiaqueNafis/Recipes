@@ -3,6 +3,7 @@ package com.example.recipe.services;
 import com.example.recipe.dto.RecipeDto;
 import com.example.recipe.exception.NotFoundException;
 import com.example.recipe.models.Recipe;
+import com.example.recipe.models.User;
 
 import java.util.List;
 
@@ -25,6 +26,8 @@ public interface RecipeService {
     List<RecipeDto> findRecipeBasedOnFilter(String filter);
 
     void updateRecipeForOtherUser(Long id);
+
+    User findUserFromRecipeId(Long id);
 
 
 }

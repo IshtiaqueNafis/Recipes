@@ -57,6 +57,8 @@ public class HomeController {
             model.addAttribute("recipe", recipeDto);
             CommentDto commentdto = new CommentDto();
             model.addAttribute("comment", commentdto);
+            var user = recipeService.findUserFromRecipeId(id);
+            model.addAttribute("user", user.getName());
             return "view_recipe";
         } catch (NotFoundException e) {
             return "error";
