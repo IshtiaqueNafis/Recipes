@@ -13,7 +13,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): < Nafis Ishtiaque,Naveen Jose>
+ * Student Number: < 101206872,101238395>
+ * Date: October 23, 2022
+ * Description: "let user register and login"
+ */
+//endregion
 @Controller
 @AllArgsConstructor
 @RequestMapping("/auth")

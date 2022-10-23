@@ -4,7 +4,16 @@ import com.example.recipe.dto.RecipeDto;
 import com.example.recipe.models.Recipe;
 
 import java.util.stream.Collectors;
-
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): <mahmoud farghali,Nafis Ishtiaque>
+ * Student Number: <101347618,101206872>
+ * Date: October 23, 2022
+ * Description: "Maps recipe to dto and vice versa"
+ */
+//endregion
 public class RecipeMapper {
 
     public RecipeDto mapToRecipeDto(Recipe recipe) {

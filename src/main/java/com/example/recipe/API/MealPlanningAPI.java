@@ -18,6 +18,17 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): < Nafis Ishtiaque>
+ * Student Number: < 101206872 … >
+ * Date: June 23,2022
+ * Description: "Adds meal plan to the calendar moves it and deletes it"
+ */
+
+//endregion
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api")
@@ -41,6 +52,9 @@ public class MealPlanningAPI {
     MealPlanner createMeal(@NotNull @RequestBody MealPlanCreateParams params, Model model) {
 
         MealPlanner mealPlanner = new MealPlanner();
+        System.out.println(params.recipeId);
+        System.out.println(params.start);
+        System.out.println(params.end);
         mealPlanService.createMealPlan(mealPlanner, params.recipeId, params.start, params.end);
 
         return mealPlanner;
@@ -51,6 +65,8 @@ public class MealPlanningAPI {
     @Transactional
     MealPlanner moveMeal(@RequestBody MealMoveParams params) {
         MealPlanner mealPlanner = mealPlanService.moveMealPlanDate(params.id, params.start, params.end);
+
+
 
         return mealPlanner;
     }
@@ -84,6 +100,7 @@ public class MealPlanningAPI {
     }
 
 
+    //region *** classes for updating recipes ***
     public static class MealPlanCreateParams {
         public LocalDateTime start;
         public LocalDateTime end;
@@ -99,10 +116,7 @@ public class MealPlanningAPI {
         public Long resource;
     }
 
-    public static class SetColorParams {
-        public Long id;
-        public String color;
-    }
+
 
     public static class MealMoveParams {
         public Long id;
@@ -122,5 +136,6 @@ public class MealPlanningAPI {
         public long userId;
         public long recipeId;
     }
+    //endregion
 
 }

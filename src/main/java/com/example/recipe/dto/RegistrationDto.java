@@ -7,7 +7,16 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): <Nafis Ishtiaque, wendellkeith salting>
+ * Student Number: <101206872,101271842>
+ * Date: October 23, 2022
+ * Description: "Map comment before saving and retriving to database"
+ */
+//endregion
 @Getter
 @Setter
 @NoArgsConstructor

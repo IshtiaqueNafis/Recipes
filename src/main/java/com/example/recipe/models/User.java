@@ -17,6 +17,18 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
+
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): <Nafis Ishtiaque,wendellkeith salting>
+ * Student Number: <101206872,101271842>
+ * Date: October 23, 2022
+ * Description: "User model for creating and showing user"
+ */
+//endregion
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -9,6 +9,16 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): <Nafis Ishtiaque,wendellkeith salting>
+ * Student Number: <101206872,101271842>
+ * Date: October 23, 2022
+ * Description: "Meal plan for the user"
+ */
+//endregion
 @Getter
 @Setter
 @NoArgsConstructor

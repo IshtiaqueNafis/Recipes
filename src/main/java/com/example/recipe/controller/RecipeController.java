@@ -19,9 +19,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.validation.Valid;
 import java.util.List;
+
+
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): < Nafis Ishtiaque,Naveen Jose mahmoud farghali,wendellkeith salting>
+ * Student Number: < 101206872,101238395,101347618,101271842>
+ * Date: October 23, 2022
+ * Description: "Recipe let users create edit or private recipes non registered user can also use this to veiw recipes as well as comment section is only open for non registered user"
+ */
+//endregion
 
 @AllArgsConstructor
 @Controller
