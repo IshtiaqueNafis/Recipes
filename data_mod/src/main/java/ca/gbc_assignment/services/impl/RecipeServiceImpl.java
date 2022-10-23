@@ -12,6 +12,7 @@ import ca.gbc_assignment.repository.MealPlannerRepository;
 import ca.gbc_assignment.repository.RecipeRepository;
 import ca.gbc_assignment.repository.UserRepository;
 import ca.gbc_assignment.services.RecipeService;
+import ca.gbc_assignment.utils.RandomImageGenerator;
 import ca.gbc_assignment.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;

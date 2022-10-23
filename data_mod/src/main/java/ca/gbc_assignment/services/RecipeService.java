@@ -2,6 +2,7 @@ package ca.gbc_assignment.services;
 
 import ca.gbc_assignment.dto.RecipeDto;
 import ca.gbc_assignment.exception.NotFoundException;
+import ca.gbc_assignment.models.User;
 
 import java.util.List;
 

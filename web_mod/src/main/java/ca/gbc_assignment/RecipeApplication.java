@@ -6,6 +6,7 @@ import ca.gbc_assignment.models.User;
 import ca.gbc_assignment.repository.RecipeRepository;
 import ca.gbc_assignment.repository.RolesRepository;
 import ca.gbc_assignment.repository.UserRepository;
+import ca.gbc_assignment.utils.RandomImageGenerator;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

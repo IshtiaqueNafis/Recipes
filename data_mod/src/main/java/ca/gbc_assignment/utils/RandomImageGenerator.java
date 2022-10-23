@@ -1,4 +1,4 @@
-package com.example.recipe.utils;
+package ca.gbc_assignment.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -6,6 +6,7 @@ import ca.gbc_assignment.models.*;
 import ca.gbc_assignment.mapper.RecipeMapper;
 import ca.gbc_assignment.repository.*;
 import ca.gbc_assignment.services.UserService;
+import ca.gbc_assignment.utils.RandomImageGenerator;
 import ca.gbc_assignment.utils.SecurityUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
