@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
 >
 <head>
+    <title>Ratings</title>
     <meta charset="UTF-8">
     <div th:replace=" fragments/header.html::header"></div>
 
@@ -12,38 +13,40 @@
 <body>
 <div class="container">
     <div class="row">
-        <h1>List of Comments</h1>
+        <h1>Ratings for Posted Recipes</h1>
 
 
-    <table class="table table-bordered table-striped" id="commentsTable">
-        <thead class="table-dark">
-        <tr>
-            <th>Name</th>
-            <th>Comment</th>
-            <th>Created Date</th>
-            <th>Actions</th></tr>
-        </tr>
+        <table class="table table-bordered table-striped" id="commentsTable">
+            <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Comment</th>
+                <th>Created Date</th>
+                <th>Actions</th>
+            </tr>
+            </tr>
 
-        </thead>
-        <tbody>
-        <tr th:each="comment,commentStrat:${comments}">
+            </thead>
+            <tbody>
+            <tr th:each="comment,commentStrat:${comments}">
 
-            <td th:text="${commentStrat.count}"></td>
-            <td th:text="${comment.content}"></td>
-            <td th:text="${#temporals.format(comment.createdOn, 'dd MMM yyyy')}"></td>
-            <td>
-                <a  class="btn btn-danger" th:href="@{/recipes/comment/{commentId}(commentId=${comment.id})}">DELETE</a>
-            </td>
+                <td th:text="${commentStrat.count}"></td>
+                <td th:text="${comment.content}"></td>
+                <td th:text="${#temporals.format(comment.createdOn, 'dd MMM yyyy')}"></td>
+                <td>
+                    <a class="btn btn-danger"
+                       th:href="@{/registered/recipes/comment/{commentId}(commentId=${comment.id})}">DELETE</a>
+                </td>
 
-        </tr>
-        </tbody>
-    </table>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.25/datatables.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("#commentsTable").DataTable({
             'aoColumnDefs': [{
                 'bSortable': false,

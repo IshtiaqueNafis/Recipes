@@ -44,6 +44,7 @@ public class RecipeServiceImpl implements RecipeService {
         String email = Objects.requireNonNull(SecurityUtils.getCurrentUser()).getUsername();
         User user = userRepository.findByEmail(email);
         recipe.setCreatedBy(user);
+        recipe.setPhoto(RandomImageGenerator.randomFoodImageHolder.get(RandomImageGenerator.randomImageGeneratorFood()));
         recipeRepository.save(recipe);
     }
 
@@ -52,6 +53,7 @@ public class RecipeServiceImpl implements RecipeService {
 
         Recipe recipe = new RecipeMapper().mapToRecipe(recipeDto);
         recipe.setCreatedOn(recipeDto.getCreatedOn());
+        recipe.setPhoto(recipe.getPhoto());
         String email = SecurityUtils.getCurrentUser().getUsername();
         User user = userRepository.findByEmail(email);
         recipe.setCreatedBy(user);
@@ -151,6 +153,14 @@ public class RecipeServiceImpl implements RecipeService {
             }
         }
 
+
+    }
+
+    @Override
+    public User findUserFromRecipeId(Long id) {
+        var recipe = recipeRepository.findById(id).get();
+        var user = userRepository.findById(recipe.getCreatedBy().getId()).get();
+        return user;
 
     }
 

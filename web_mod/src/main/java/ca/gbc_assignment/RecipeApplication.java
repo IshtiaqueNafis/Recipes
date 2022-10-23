@@ -49,6 +49,7 @@ public class RecipeApplication implements CommandLineRunner {
             user.setEmail(registrationDto.getEmail());
             user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
             user.setRoles(Arrays.asList(roles));
+            user.setPhoto(RandomImageGenerator.randomPersonHolder.get(RandomImageGenerator.randomImageGeneratorPerson()));
             userRepository.save(user);
             id++;
 

@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
 >
 <head>
+<title>My Profile</title>
     <meta charset="UTF-8">
     <div th:replace=" fragments/header.html::header"></div>
 
@@ -10,15 +11,82 @@
 <div th:replace="fragments/header.html::navbar"></div>
 <br><br><br>
 <body>
-<div class="container">
-    <p th:text="${userDetails.email}"></p>
-    <p th:text="${userDetails.userName}"></p>
-    <p th:text="${userDetails.totalNumberOfFav}"></p>
-    <p th:text="${userDetails.totalPrivateRecipes}"></p>
-    <p th:text="${userDetails.totalNumberOfMealPlans}"></p>
-    <p th:text="${userDetails.totalRecipesCreated}"></p>
-    <p th:text="${userDetails.averageRecipeRating}"></p>
+<style>
+
+    img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .bg-black {
+        background: #000;
+    }
+
+    .skill-block {
+        width: 30%;
+    }
+
+    @media (min-width: 991px) and (max-width:1200px) {
+        .skill-block {
+            padding: 32px !important;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .skill-block {
+            padding: 56px !important;
+        }
+    }
+
+    body {
+        background-color: #eeeeee;
+    }
+</style>
+
+
+<div class="container mt-5 mb-5">
+    <div class="row no-gutters">
+        <div class="col-md-4 col-lg-4"><img th:src="${userDetails.photos}">
+        </div>
+        <div class="col-md-8 col-lg-8">
+            <div class="d-flex flex-column">
+                <div class="d-flex flex-row justify-content-between align-items-center p-5 bg-dark text-white">
+                    <h3 class="display-5" th:text="${userDetails.userName}"></h3>
+                   </div>
+                <div class="p-3 bg-black text-white">
+                    <h6 th:text="${userDetails.email}"></h6>
+                </div>
+                <div class="d-flex flex-row text-white">
+                    <div class="p-4 bg-primary text-center skill-block">
+                        <h6>Favourite Recipes</h6>
+                        <h4 th:text="${userDetails.totalNumberOfFav}"></h4>
+                    </div>
+                    <div class="p-3 bg-success text-center skill-block">
+                        <h6>Private Recipes</h6>
+                        <h4 th:text="${userDetails.totalPrivateRecipes}"></h4>
+                    </div>
+                    <div class="p-3 bg-warning text-center skill-block">
+                        <h4>Number of Meal Plans</h4>
+                        <h6 th:text="${userDetails.totalNumberOfMealPlans}"></h6>
+                    </div>
+                    <div class="p-3 bg-danger text-center skill-block">
+                        <h6>Recipes Created</h6>
+                        <h4 th:text="${userDetails.totalRecipesCreated}"></h4>
+                    </div>
+
+                    <div class="p-3 bg-info text-center skill-block">
+                        <h6>Average Ratings</h6>
+                        <h4 th:text="${ratings}"></h4>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
 
 
 <div th:replace="fragments/footer.html::footer"></div>

@@ -42,6 +42,11 @@ public class Recipe {
     private String difficultyLevel;
 
     @NonNull
+    @Column(name = "photo")
+    private String photo;
+
+
+    @NonNull
     @Column(name = "is_private")
     private boolean availability = false;
 

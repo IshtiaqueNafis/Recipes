@@ -25,5 +25,7 @@ public interface RecipeService {
 
     void updateRecipeForOtherUser(Long id);
 
+    User findUserFromRecipeId(Long id);
+
 
 }

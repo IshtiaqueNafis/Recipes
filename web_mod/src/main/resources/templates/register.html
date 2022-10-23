@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
 >
 <head>
+    <title>Register</title>
     <meta charset="UTF-8">
     <div th:replace=" fragments/header.html::header"></div>
 </head>
@@ -15,7 +16,7 @@
 
         <div th:if="${param.success}">
             <div class="alert alert-info">
-                You have registered successfully to our Blog app!
+                You have registered successfully to Cooking Overload!
             </div>
         </div>
         <div class="card">
@@ -65,7 +66,7 @@
                         <button type="submit" class="btn btn-primary">Sign up</button>
                         <span>
                             Already Registered?
-                            <a th:href="@{/auth/login}">Log in here</a>
+                            <a th:href="@{/auth/loginForm}">Log in here</a>
                         </span>
 
                     </div>

@@ -12,6 +12,7 @@ import lombok.Setter;
 public class UserDetails {
     private String userName;
     private String email;
+    private String photos;
     private int totalRecipesCreated;
     private int totalPrivateRecipes;
     private int totalNumberOfMealPlans;

@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
 >
 <head>
+    <title>Meal Plan</title>
     <meta charset="UTF-8">
     <div th:replace="fragments/header.html::header"></div>
     <link href="css/main.css" rel="stylesheet" type="text/css">
@@ -11,7 +12,9 @@
 <div th:replace="fragments/header.html::navbar"></div>
 <br><br><br>
 <body>
+<h1 class="text-center">My Meal Plans </h1>
 <div class="main" style="display: flex;">
+
     <div style="margin-right: 10px;">
         <div id="nav"></div>
     </div>
@@ -194,14 +197,6 @@
             },
 
 
-            {
-                text: "Recipe creator info",
-                icon: "icon icon-green",
-                color: "#1066a8",
-                onClick: function (args) {
-
-                }
-            }
         ]
     });
     dp.init();

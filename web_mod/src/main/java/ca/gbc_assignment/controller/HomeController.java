@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.text.MessageFormat;
 import java.util.List;
 
 @Controller
@@ -30,16 +31,20 @@ public class HomeController {
     @GetMapping(path = {"/", "/search", "/filter/{filter}"})
     public String home(Model model, String query, @PathVariable(required = false, name = "filter") String filter) {
         List<RecipeDto> recipes;
+        String title = "";
         if (query == null && filter == null) {
+            title = "Showing all Recipes";
             recipes = recipeService.findRecipeForHomePage();
         } else if (query == null && filter != null) {
+            title = MessageFormat.format("Showing Recipes by {0} Criteria", filter);
             recipes = recipeService.findRecipeBasedOnFilter(filter);
 
         } else {
+            title = MessageFormat.format("Showing recipes by {0} Criteria", query);
             recipes = recipeService.searchRecipes(query);
         }
 
-
+        model.addAttribute("title", title);
         model.addAttribute("recipes", recipes);
         model.addAttribute("query", query);
         return "home";
@@ -53,6 +58,8 @@ public class HomeController {
             model.addAttribute("recipe", recipeDto);
             CommentDto commentdto = new CommentDto();
             model.addAttribute("comment", commentdto);
+            var user = recipeService.findUserFromRecipeId(id);
+            model.addAttribute("user", user.getName());
             return "view_recipe";
         } catch (NotFoundException e) {
             return "error";
@@ -90,6 +97,7 @@ public class HomeController {
 
         return "meal_plan";
     }
+
 
 
 }
