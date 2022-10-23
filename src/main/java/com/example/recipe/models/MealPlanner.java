@@ -36,6 +36,14 @@ public class MealPlanner {
     private LocalDateTime end;
     private String text;
 
+    public MealPlanner(LocalDateTime start, LocalDateTime end, String text, User user, Recipe recipe) {
+        this.start = start;
+        this.end = end;
+        this.text = text;
+        this.user = user;
+        this.recipe = recipe;
+    }
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)

@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
  * Author(s): <Nafis Ishtiaque, wendellkeith salting>
  * Student Number: <101206872,101271842>
  * Date: October 23, 2022
- * Description: "Map comment before saving and retriving to database"
+ * Description: "Map Registration before saving and retriving to database"
  */
 //endregion
 @Getter
