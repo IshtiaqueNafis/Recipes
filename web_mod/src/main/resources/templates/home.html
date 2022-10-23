@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="fragments/header.html::header"></div>
+</head>
+<div th:replace="fragments/header.html::navbar"></div>
+<br><br><br>
+<body>
+<div class="h-100 d-flex align-items-center justify-content-center">
+
+    <!-- Tabs navs -->
+    <ul class="nav nav-tabs mb-3" id="ex1" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a
+                    class="nav-link active"
+                    id="ex1-tab-1"
+                    data-mdb-toggle="tab"
+                    href="#ex1-tabs-1"
+                    role="tab"
+                    aria-controls="ex1-tabs-1"
+                    aria-selected="true"
+            >Search for an recipe</a
+            >
+        </li>
+        <li class="nav-item" role="presentation">
+            <a
+                    class="nav-link"
+                    id="ex1-tab-2"
+                    data-mdb-toggle="tab"
+                    href="#ex1-tabs-2"
+                    role="tab"
+                    aria-controls="ex1-tabs-2"
+                    aria-selected="false"
+            >Filter By Recipe Difficulty</a
+            >
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <a
+                    class="nav-link"
+                    id="ex1-tab-3"
+                    data-mdb-toggle="tab"
+                    href="#ex1-tabs-3"
+                    role="tab"
+                    aria-controls="ex1-tabs-3"
+                    aria-selected="false"
+            >Filter By Recipe Type</a
+            >
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <a
+                    class="nav-link"
+                    id="ex1-tab-4"
+                    data-mdb-toggle="tab"
+                    href="#ex1-tabs-4"
+                    role="tab"
+                    aria-controls="ex1-tabs-4"
+                    aria-selected="false"
+            >Filter By Calories</a
+            >
+        </li>
+
+
+        <li class="nav-item" role="presentation">
+            <a
+                    class="nav-link"
+                    id="ex1-tab-5"
+                    data-mdb-toggle="tab"
+                    href="#ex1-tabs-5"
+                    role="tab"
+                    aria-controls="ex1-tabs-5"
+                    aria-selected="false"
+            >Filter By Date</a
+            >
+        </li>
+
+    </ul>
+    <!-- Tabs navs -->
+
+    <!-- Tabs content -->
+    <div class="tab-content" id="ex1-content">
+        <div
+                class="tab-pane fade show active"
+                id="ex1-tabs-1"
+                role="tabpanel"
+                aria-labelledby="ex1-tab-1"
+        >
+            <div class="container">
+                <form class="input-group" th:action="@{/search}" method="get">
+
+                    <div class="form-outline">
+                        <input type="search" id="form1" class="form-control" name="query" th:value="${query}"/>
+                        <label class="form-label" for="form1">Search for a recipe</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary me-3">
+                        <i class="fas fa-search"></i>
+                    </button>
+
+
+                    <a class="btn btn-danger me-3" th:href="@{/static}">Reset</a>
+
+
+                </form>
+            </div>
+
+        </div>
+        <div class="tab-pane fade mx-3" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+            <div class="me-3">
+                <a th:href="@{/filter/{filter}(filter=${'Easy'})}" type="button" class="btn btn-success">Easy</a>
+                <a th:href="@{/filter/{filter}(filter=${'Medium'})}" type="button" class="btn btn-danger">Medium</a>
+                <a th:href="@{/filter/{filter}(filter=${'Hard'})}" type="button" class="btn btn-warning">Hard</a>
+                <a class="btn btn-danger me-3" th:href="@{/static}">Reset</a>
+            </div>
+
+        </div>
+
+        <div class="tab-pane fade mx-3" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+            <div class="me-3">
+                <a th:href="@{/filter/{filter}(filter=${'Breakfast'})}" type="button" class="btn btn-success">Breakfast</a>
+                <a th:href="@{/filter/{filter}(filter=${'Lunch'})}" type="button" class="btn btn-danger">Lunch</a>
+                <a th:href="@{/filter/{filter}(filter=${'Dinner'})}" type="button" class="btn btn-danger">Dinner</a>
+                <a class="btn btn-danger me-3" th:href="@{/static}">Reset</a>
+            </div>
+
+        </div>
+
+        <div class="tab-pane fade mx-3" id="ex1-tabs-4" role="tabpanel" aria-labelledby="ex1-tab-4">
+            <div class="me-3">
+                <a th:href="@{/filter/{filter}(filter=${'High'})}" type="button" class="btn btn-success">High</a>
+                <a th:href="@{/filter/{filter}(filter=${'Low'})}" type="button" class="btn btn-danger">Low</a>
+                <a class="btn btn-danger me-3" th:href="@{/static}">Reset</a>
+            </div>
+
+        </div>
+
+        <div class="tab-pane fade mx-3" id="ex1-tabs-5" role="tabpanel" aria-labelledby="ex1-tab-5">
+            <div class="me-3">
+                <a th:href="@{/filter/{filter}(filter=${'Date Asc'})}" type="button" class="btn btn-success">Date Ascending</a>
+                <a th:href="@{/filter/{filter}(filter=${'Date Desc'})}" type="button" class="btn btn-danger">Date Descending</a>
+
+                <a class="btn btn-danger me-3" th:href="@{/static}">Reset</a>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- Tabs content -->
+</div>
+
+<div>
+
+
+</div>
+<br><br><br>
+
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" th:each="recipe:${recipes}">
+
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="..." class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${recipe.name}"></h5>
+                            <p class="card-text" th:text="${recipe.description}"></p>
+                            <p class="card-text"><small class="text-muted"
+                                                        th:text="|Created on: ${#temporals.format(recipe.createdOn,'dd MMM yyyy')}|"></small>
+                            </p>
+                            <a class="btn btn-primary" th:href="@{/recipe_details/{id}(id=${recipe.id})}">View
+                                Details</a>
+
+                            <a th:href="@{/registered/recipes/favourites/add/{id}(id=${recipe.id})}"
+                               sec:authorize="isAuthenticated()" class="btn btn-primary">Add to
+                                favourites</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<div th:replace="fragments/footer.html::footer"></div>
+
+
+</body>
+</html>
