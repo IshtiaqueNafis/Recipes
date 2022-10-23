@@ -10,7 +10,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
-
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): <Nafis Ishtiaque>
+ * Student Number: <101206872 >
+ * Date: October 23, 2022
+ * Description: "Get the current logged in user"
+ */
+//endregion
 @Service
 @AllArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {

@@ -6,7 +6,16 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
-
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): <Nafis Ishtiaque,wendellkeith salting,mahmoud farghali,Naveed Jose>
+ * Student Number: <101206872,101271842,101347618,101347618 >
+ * Date: October 23, 2022
+ * Description: "RecipeRepository  for crud operation"
+ */
+//endregion
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     List<Recipe> findByType(String type);
 
@@ -22,6 +31,8 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     List<Recipe> findRecipesPublic();
 
     List<Recipe> findByDifficultyLevel(String difficultyLevel);
+
+    Recipe findByName(String name);
 
 
 

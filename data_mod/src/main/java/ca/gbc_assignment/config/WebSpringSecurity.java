@@ -12,7 +12,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): < Nafis Ishtiaque>
+ * Student Number: < 101206872>
+ * Date: October 23, 2022
+ * Description: "set basic secuirty routes"
+ */
+//endregion
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)

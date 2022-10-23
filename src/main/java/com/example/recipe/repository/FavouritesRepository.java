@@ -1,7 +1,10 @@
-package ca.gbc_assignment.repository;
+package com.example.recipe.repository;
 
-import ca.gbc_assignment.models.Role;
+import com.example.recipe.models.Favourites;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 //region ***** *******************************
 /*
  * Project: < project name Recipes >
@@ -9,9 +12,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Author(s): <Nafis Ishtiaque,wendellkeith salting,mahmoud farghali,Naveed Jose>
  * Student Number: <101206872,101271842,101347618,101347618 >
  * Date: October 23, 2022
- * Description: "RolesRepository  for crud operation"
+ * Description: "FavouritesRepository for crud operation"
  */
 //endregion
-public interface RolesRepository extends JpaRepository<Role,Long> {
-    Role findByName(String name);
+public interface FavouritesRepository extends JpaRepository<Favourites, Long> {
+
+
 }

@@ -15,6 +15,17 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "comments")
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): <Nafis Ishtiaque>
+ * Student Number: <101347618,101206872>
+ * Date: October 23, 2022
+ * Description: "Comments lets unregisterd user post comment and rating"
+ */
+//endregion
+
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +34,12 @@ public class Comment {
     @Column(nullable = false)
     private String name;
 
+    public Comment(String name, int rating, String content, Recipe recipe) {
+        this.name = name;
+        this.rating = rating;
+        this.content = content;
+        this.recipe = recipe;
+    }
 
     private int rating;
 

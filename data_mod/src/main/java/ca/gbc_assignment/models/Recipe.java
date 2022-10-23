@@ -9,6 +9,16 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): <Nafis Ishtiaque>
+ * Student Number: <101206872>
+ * Date: October 23, 2022
+ * Description: "Recipe model for creating Recipes"
+ */
+//endregion
 @Getter
 @Setter
 @AllArgsConstructor
@@ -17,9 +27,21 @@ import java.util.Set;
 @Table(name = "recipes")
 @Builder
 public class Recipe {
-    public Recipe(Long id, @NonNull String name, @NonNull String description, User createdBy) {
-        this.id = id;
+    public Recipe(
+            @NonNull String name,
+            @NonNull String type,
+            @NonNull String difficultyLevel,
+            @NonNull String photo,
+            @NonNull boolean availability,
+            @NonNull int calories,
+            @NonNull String description,
+            User createdBy) {
         this.name = name;
+        this.type = type;
+        this.difficultyLevel = difficultyLevel;
+        this.photo = photo;
+        this.availability = availability;
+        this.calories = calories;
         this.description = description;
         this.createdBy = createdBy;
     }
@@ -79,8 +101,6 @@ public class Recipe {
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;
-
-
 
 
 }

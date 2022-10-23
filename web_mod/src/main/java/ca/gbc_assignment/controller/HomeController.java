@@ -19,7 +19,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.text.MessageFormat;
 import java.util.List;
-
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): < Nafis Ishtiaque,Naveen Jose mahmoud farghali>
+ * Student Number: < 101206872,101238395,101347618 >
+ * Date: October 23, 2022
+ * Description: "Home controller is responsible for showing routes for unregistred and registered user also meal plan was put on here cause it was giving errors"
+ */
+//endregion
 @Controller
 @AllArgsConstructor
 public class HomeController {

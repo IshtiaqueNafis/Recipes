@@ -3,6 +3,16 @@ package ca.gbc_assignment.mapper;
 import ca.gbc_assignment.dto.CommentDto;
 import ca.gbc_assignment.models.Comment;
 
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): <mahmoud farghali,Nafis Ishtiaque>
+ * Student Number: <101347618,101206872>
+ * Date: October 23, 2022
+ * Description: "Maps Comment to dto and vice versa"
+ */
+//endregion
 public class CommentMapper {
     public static CommentDto mapToCommentDto(Comment comment) {
 

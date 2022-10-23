@@ -8,7 +8,16 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): <wendellkeith salting>
+ * Student Number: <101271842>
+ * Date: October 23, 2022
+ * Description: "Meal plan for the user"
+ */
+//endregion
 @Getter
 @Setter
 @AllArgsConstructor

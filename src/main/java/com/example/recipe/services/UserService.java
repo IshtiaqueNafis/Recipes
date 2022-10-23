@@ -1,7 +1,8 @@
-package ca.gbc_assignment.repository;
+package com.example.recipe.services;
 
-import ca.gbc_assignment.models.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.recipe.dto.RegistrationDto;
+import com.example.recipe.models.User;
+import com.example.recipe.models.UserDetails;
 
 import javax.transaction.Transactional;
 //region ***** *******************************
@@ -11,10 +12,14 @@ import javax.transaction.Transactional;
  * Author(s): <Nafis Ishtiaque,wendellkeith salting,mahmoud farghali,Naveed Jose>
  * Student Number: <101206872,101271842,101347618,101347618 >
  * Date: October 23, 2022
- * Description: "UserRepository   for crud operation"
+ * Description: "Forms contanct for UserServiceImpl"
  */
 //endregion
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserService {
+    void saveUser(RegistrationDto registrationDto);
+
 
     User findByEmail(String email);
+
+    UserDetails userDetails();
 }

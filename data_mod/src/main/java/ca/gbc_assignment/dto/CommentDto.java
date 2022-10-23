@@ -13,6 +13,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
+//region ***** *******************************
+/*
+ * Project: < project name Recipes >
+ * Assignment: < assignment 1 >
+ * Author(s): < wendellkeith salting>
+ * Student Number: <101271842>
+ * Date: October 23, 2022
+ * Description: "Map comment before saving and retriving to database"
+ */
+//endregion
 public class CommentDto {
     private Long id;
     @NotBlank(message = "name can not be blank")
