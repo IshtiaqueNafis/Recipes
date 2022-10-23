@@ -1,11 +1,8 @@
 package ca.gbc_assignment;
 
 import ca.gbc_assignment.dto.RegistrationDto;
-import ca.gbc_assignment.models.Role;
-import ca.gbc_assignment.models.User;
-import ca.gbc_assignment.repository.RecipeRepository;
-import ca.gbc_assignment.repository.RolesRepository;
-import ca.gbc_assignment.repository.UserRepository;
+import ca.gbc_assignment.models.*;
+import ca.gbc_assignment.repository.*;
 import ca.gbc_assignment.utils.RandomImageGenerator;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -86,43 +83,43 @@ public class RecipeApplication implements CommandLineRunner {
                 )
         );
 
-        for (Recipe recipe : recipes) {
-            recipeRepository.save(recipe);
-
-        }
-
-        commentRepository.save(new Comment("nafis", 1, "Bad Recipe", recipeRepository.findByName("Tandoori Masala")));
-        commentRepository.save(new Comment("nafu", 2, "Bad Recipe", recipeRepository.findByName("Tandoori Masala")));
-        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Tandoori Masala")));
-
-
-        commentRepository.save(new Comment("nafis", 1, "Bad Recipe", recipeRepository.findByName("Steak, Bacon, and Gruyere Paninis")));
-        commentRepository.save(new Comment("nafu", 2, "Bad Recipe", recipeRepository.findByName("Steak, Bacon, and Gruyere Paninis")));
-        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Steak, Bacon, and Gruyere Paninis")));
-
-
-        commentRepository.save(new Comment("nafis", 1, "Bad Recipe", recipeRepository.findByName("Crispy Fish Sandwich")));
-        commentRepository.save(new Comment("nafu", 2, "Bad Recipe", recipeRepository.findByName("Potato Samosas (Aloo Pies)")));
-        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Veal Gravy Soup")));
-        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Prekmurska Gibanica")));
-        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Princess Cake")));
-        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Ham and Cheese Crepes")));
-        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Firecracker Ribs")));
-
-
-
-
-        favouritesRepository.save(new Favourites(userRepository.findByEmail("nafu22@gmail.com"), recipeRepository.findByName("Tandoori Masala")));
-        favouritesRepository.save(new Favourites(userRepository.findByEmail("nafu22@gmail.com"), recipeRepository.findByName("Steak, Bacon, and Gruyere Paninis")));
-        favouritesRepository.save(new Favourites(userRepository.findByEmail("nafu22@gmail.com"), recipeRepository.findByName("Firecracker Ribs")));
-        favouritesRepository.save(new Favourites(userRepository.findByEmail("wendell@gmail.com"), recipeRepository.findByName("Veal Gravy Soup")));
-        favouritesRepository.save(new Favourites(userRepository.findByEmail("wendell@gmail.com"), recipeRepository.findByName("Princess Cake")));
-        favouritesRepository.save(new Favourites(userRepository.findByEmail("naveed@gmail.com"), recipeRepository.findByName("Ham and Cheese Crepes")));
-        favouritesRepository.save(new Favourites(userRepository.findByEmail("naveed@gmail.com"), recipeRepository.findByName("Veal Gravy Soup")));
-        favouritesRepository.save(new Favourites(userRepository.findByEmail("naveed@gmail.com"), recipeRepository.findByName("Crispy Fish Sandwich")));
-
-
-
+//        for (Recipe recipe : recipes) {
+//            recipeRepository.save(recipe);
+//
+//        }
+//
+//        commentRepository.save(new Comment("nafis", 1, "Bad Recipe", recipeRepository.findByName("Tandoori Masala")));
+//        commentRepository.save(new Comment("nafu", 2, "Bad Recipe", recipeRepository.findByName("Tandoori Masala")));
+//        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Tandoori Masala")));
+//
+//
+//        commentRepository.save(new Comment("nafis", 1, "Bad Recipe", recipeRepository.findByName("Steak, Bacon, and Gruyere Paninis")));
+//        commentRepository.save(new Comment("nafu", 2, "Bad Recipe", recipeRepository.findByName("Steak, Bacon, and Gruyere Paninis")));
+//        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Steak, Bacon, and Gruyere Paninis")));
+//
+//
+//        commentRepository.save(new Comment("nafis", 1, "Bad Recipe", recipeRepository.findByName("Crispy Fish Sandwich")));
+//        commentRepository.save(new Comment("nafu", 2, "Bad Recipe", recipeRepository.findByName("Potato Samosas (Aloo Pies)")));
+//        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Veal Gravy Soup")));
+//        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Prekmurska Gibanica")));
+//        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Princess Cake")));
+//        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Ham and Cheese Crepes")));
+//        commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Firecracker Ribs")));
+//
+//
+//
+//
+//        favouritesRepository.save(new Favourites(userRepository.findByEmail("nafu22@gmail.com"), recipeRepository.findByName("Tandoori Masala")));
+//        favouritesRepository.save(new Favourites(userRepository.findByEmail("nafu22@gmail.com"), recipeRepository.findByName("Steak, Bacon, and Gruyere Paninis")));
+//        favouritesRepository.save(new Favourites(userRepository.findByEmail("nafu22@gmail.com"), recipeRepository.findByName("Firecracker Ribs")));
+//        favouritesRepository.save(new Favourites(userRepository.findByEmail("wendell@gmail.com"), recipeRepository.findByName("Veal Gravy Soup")));
+//        favouritesRepository.save(new Favourites(userRepository.findByEmail("wendell@gmail.com"), recipeRepository.findByName("Princess Cake")));
+//        favouritesRepository.save(new Favourites(userRepository.findByEmail("naveed@gmail.com"), recipeRepository.findByName("Ham and Cheese Crepes")));
+//        favouritesRepository.save(new Favourites(userRepository.findByEmail("naveed@gmail.com"), recipeRepository.findByName("Veal Gravy Soup")));
+//        favouritesRepository.save(new Favourites(userRepository.findByEmail("naveed@gmail.com"), recipeRepository.findByName("Crispy Fish Sandwich")));
+//
+//
+//
 
     }
 
