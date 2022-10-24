@@ -36,6 +36,7 @@ public class RecipeApplication implements CommandLineRunner {
     UserRepository userRepository;
     FavouritesRepository favouritesRepository;
     CommentRepository commentRepository;
+    MealPlannerRepository mealPlannerRepository;
     private PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
