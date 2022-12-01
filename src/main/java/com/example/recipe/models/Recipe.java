@@ -1,5 +1,6 @@
 package com.example.recipe.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,15 +28,7 @@ import java.util.Set;
 @Table(name = "recipes")
 @Builder
 public class Recipe {
-    public Recipe(
-            @NonNull String name,
-            @NonNull String type,
-            @NonNull String difficultyLevel,
-            @NonNull String photo,
-            @NonNull boolean availability,
-            @NonNull int calories,
-            @NonNull String description,
-            User createdBy) {
+    public Recipe(@NonNull String name, @NonNull String type, @NonNull String difficultyLevel, @NonNull String photo, @NonNull boolean availability, @NonNull int calories, @NonNull String description, User createdBy) {
         this.name = name;
         this.type = type;
         this.difficultyLevel = difficultyLevel;
@@ -101,6 +94,18 @@ public class Recipe {
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "recipe")
+    private Events events;
+
+    @Transient
+    private Long numberOfEvents = 0L;
+
+    @Transient
+    private Long numberOfMealPlans = 0L;
+    @Transient
+    private Long numberTimesFavorites = 0L;
 
 
 }

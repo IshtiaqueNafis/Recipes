@@ -1,6 +1,8 @@
 package com.example.recipe.services;
 
 import com.example.recipe.dto.RegistrationDto;
+import com.example.recipe.exception.EmailAlreadyExistsException;
+import com.example.recipe.models.ChangeUserDetails;
 import com.example.recipe.models.User;
 import com.example.recipe.models.UserDetails;
 
@@ -22,4 +24,10 @@ public interface UserService {
     User findByEmail(String email);
 
     UserDetails userDetails();
+
+    void changeUserPassword(String OldPassword, String NewPassword);
+
+    void resetPassword();
+
+    void changeUserInfo(ChangeUserDetails changeUserDetails) throws EmailAlreadyExistsException;
 }

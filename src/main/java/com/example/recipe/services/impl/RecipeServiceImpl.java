@@ -7,10 +7,7 @@ import com.example.recipe.models.Favourites;
 import com.example.recipe.models.MealPlanner;
 import com.example.recipe.models.Recipe;
 import com.example.recipe.models.User;
-import com.example.recipe.repository.FavouritesRepository;
-import com.example.recipe.repository.MealPlannerRepository;
-import com.example.recipe.repository.RecipeRepository;
-import com.example.recipe.repository.UserRepository;
+import com.example.recipe.repository.*;
 import com.example.recipe.services.RecipeService;
 import com.example.recipe.utils.RandomImageGenerator;
 import com.example.recipe.utils.SecurityUtils;
@@ -19,9 +16,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 //region ***** *******************************
 /*
  * Project: < project name Recipes >
@@ -37,6 +37,7 @@ import java.util.stream.Collectors;
 public class RecipeServiceImpl implements RecipeService {
     private RecipeRepository recipeRepository;
     private UserRepository userRepository;
+    private EventsRepository eventRepository;
 
     private FavouritesRepository favouritesRepository;
     private MealPlannerRepository mealPlannerRepository;
@@ -66,6 +67,8 @@ public class RecipeServiceImpl implements RecipeService {
         recipe.setPhoto(recipe.getPhoto());
         String email = SecurityUtils.getCurrentUser().getUsername();
         User user = userRepository.findByEmail(email);
+
+
         recipe.setCreatedBy(user);
         recipeRepository.save(recipe);
 
@@ -110,7 +113,18 @@ public class RecipeServiceImpl implements RecipeService {
         User user = userRepository.findByEmail(email);
         Long UserId = user.getId();
         List<Recipe> recipes = recipeRepository.findRecipesByUser(UserId);
-        return recipes.stream().map((recipe -> new RecipeMapper().mapToRecipeDto(recipe))).collect(Collectors.toList());
+
+
+        List<RecipeDto> recipeDtos = recipes.stream().map((recipe -> new RecipeMapper().mapToRecipeDto(recipe))).collect(Collectors.toList());
+
+        for (RecipeDto recipeDto : recipeDtos) {
+            recipeDto.setNumberOfEvents(eventRepository.countByRecipe_Id(recipeDto.getId()));
+            System.out.println(eventRepository.countByRecipe_Id(recipeDto.getId()));
+            recipeDto.setNumberTimesFavorites(favouritesRepository.countByRecipe_Id(recipeDto.getId()));
+            recipeDto.setNumberOfMealPlans(favouritesRepository.countByRecipe_Id(recipeDto.getId()));
+        }
+
+        return recipeDtos;
     }
 
     @Override
@@ -171,6 +185,20 @@ public class RecipeServiceImpl implements RecipeService {
         var recipe = recipeRepository.findById(id).get();
         var user = userRepository.findById(recipe.getCreatedBy().getId()).get();
         return user;
+
+    }
+
+    @Override
+    public List<Recipe> getRecipesForEvents() {
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User user = userRepository.findByEmail(email);
+        Long UserId = user.getId();
+        List<Recipe> recipesFromUser = recipeRepository.findRecipesByUser(UserId);
+
+        List<Recipe> publicRecipes = recipeRepository.findByCreatedByNotAndAvailabilityFalse(user);
+
+
+        return Stream.of(recipesFromUser, publicRecipes).flatMap(Collection::stream).collect(Collectors.toList());
 
     }
 

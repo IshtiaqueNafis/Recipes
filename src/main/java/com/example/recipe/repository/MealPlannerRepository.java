@@ -23,4 +23,8 @@ public interface MealPlannerRepository extends CrudRepository<MealPlanner, Long>
 
     @Query(value = "select m from meal_planner m where  not (m.end< :from or m.start> :to)")
     List<MealPlanner> findBetween(@Param("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start, @Param("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end);
+
+    long countByRecipe_Id(Long id);
+
+
 }

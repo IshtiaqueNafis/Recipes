@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <title>Ratings</title>
+    <meta charset="UTF-8">
+
+
+</head>
+<div th:replace=" fragments/header.html::header"></div>
+<div th:replace="fragments/header.html::navbar"></div>
+<br><br><br>
+<body>
+<div class="container">
+    <form role="form" method="post" th:action="@{/events/submitEvent}" th:object="${event}">
+
+        <div class="mb-3">
+            <label class="form-label">Start Date</label>
+            <input type="date" th:field="*{startDate}" id="startDate" name="startDate" />
+            <p th:if="${#fields.hasErrors('startDate')}" class="text-danger" th:errors="*{startDate}"></p>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">End Date</label>
+            <input type="date" th:field="*{endDate}" id="endDate" name="endDate" />
+            <p th:if="${#fields.hasErrors('endDate')}" class="text-danger" th:errors="*{endDate}"></p>
+        </div>
+
+
+        <div class="mb-3">
+            <label class="form-label">Event Name</label>
+            <input type="text"
+                   class="form-control"
+                   id="eventName"
+                   name="eventName"
+                   placeholder="Enter Event name"
+                   th:field="*{eventName}"
+
+            >
+            <p th:if="${#fields.hasErrors('eventName')}" class="text-danger" th:errors="*{eventName}"></p>
+
+
+
+
+
+
+
+            <div class="mb-3">
+                <label class="form-label">Event Description</label>
+                <textarea type="text"
+                          class="form-control"
+                          id="description"
+                          name="description"
+                          placeholder="Enter Recipe Description"
+                          th:field="*{description}"
+
+                >
+                    </textarea>
+                <p th:if="${#fields.hasErrors('description')}" class="text-danger" th:errors="*{description}"></p>
+            </div>
+
+
+            <input type="hidden" th:field="*{id}">
+
+
+            <div class="mb-3">
+                <label class="form-label">Recipe Difficulty</label>
+                <select id="recipe" class="form-select" aria-label="Default select example"
+                        th:field="*{recipe}">
+
+                    <option th:each="reci : ${recipes}" th:value="${reci.id}"
+                            th:text="${reci.name}"></option>
+
+                </select>
+                <p th:if="${#fields.hasErrors('recipe')}" class="text-danger"
+                   th:errors="*{recipe}"></p>
+
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.2.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#description'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+</html>

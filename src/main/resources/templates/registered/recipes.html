@@ -16,7 +16,7 @@
     <br><br>
     <div class="row">
 
-        <h1 class="text-center">My Recipe List</h1>
+        <h1 class="text-center">My Created Recipe List</h1>
     </div>
 
     <table class="table table-bordered table-striped" id="recipesTable">
@@ -24,6 +24,9 @@
         <tr>
         <th>Recipe name</th>
         <th>Calories</th>
+        <th>Events Use</th>
+        <th> On Meal Plans</th>
+        <th> Favourites</th>
         <th>Created on</th>
         <th>Ratings</th>
         <th>Actions</th>
@@ -33,6 +36,9 @@
         <tr th:each="recipe:${recipes}">
         <td th:text="${recipe.name}"></td>
         <td th:text="${recipe.calories}"></td>
+        <td th:text="${recipe.numberOfEvents}"></td>
+        <td th:text="${recipe.numberOfMealPlans}"></td>
+        <td th:text="${recipe.numberTimesFavorites}"></td>
         <td th:text="${#temporals.format(recipe.createdOn,'dd MMM yyyy')}"></td>
         <td th:text="${recipe.comments.size()>0}? ${recipe.getCommentRatings()}:'No ratings yet' "></td>
 

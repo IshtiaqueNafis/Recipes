@@ -7,12 +7,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 //region ***** *******************************
 /*
  * Project: < project name Recipes >
@@ -29,13 +32,30 @@ import javax.validation.Valid;
 public class AuthController {
 
     private UserService userService;
-
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/uploads";
     @GetMapping("/register")
     public String registrationForm(Model model) {
         RegistrationDto user = new RegistrationDto();
         model.addAttribute("user", user);
         return "register";
     }
+
+    @GetMapping("/uploadimage") public String displayUploadForm() {
+
+        return "registered/myprofile";
+    }
+
+    @PostMapping("/upload") public String uploadImage(Model model, @RequestParam("image") MultipartFile file) throws IOException {
+
+        System.out.println(UPLOAD_DIRECTORY);
+        StringBuilder fileNames = new StringBuilder();
+        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
+        fileNames.append(file.getOriginalFilename());
+        Files.write(fileNameAndPath, file.getBytes());
+        model.addAttribute("msg", "Uploaded images: " + fileNames.toString());
+        return "registered/myprofile";
+    }
+
 
     @PostMapping("/register/save")
     public String registerUser(@Valid @ModelAttribute("user") RegistrationDto user, BindingResult result,Model model) {
@@ -56,6 +76,9 @@ public class AuthController {
 
 
     }
+
+
+
 
     @GetMapping("/loginForm")
     public String loginForm(){

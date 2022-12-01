@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 //region ***** *******************************
 /*
  * Project: < project name Recipes >
@@ -38,10 +40,10 @@ public class FavoriteServiceImpl implements FavoriteService {
         String email = SecurityUtils.getCurrentUser().getUsername();
         User user = userRepository.findByEmail(email);
         Recipe recipe = recipeRepository.findById(recipeId).get();
-        var favouritsList = favouritesRepository.findAll();
+        var favouriteList = favouritesRepository.findAll();
 
-        for (var favourite :favouritsList){
-            if(favourite.getRecipe().getId()==recipeId && favourite.getUser().getId()==user.getId()){
+        for (var favourite :favouriteList){
+            if(Objects.equals(favourite.getRecipe().getId(), recipeId) && Objects.equals(favourite.getUser().getId(), user.getId())){
                 throw new AlreadyOnFavException();
             }
         }
@@ -69,7 +71,7 @@ public class FavoriteServiceImpl implements FavoriteService {
         var fav1 = favouritesRepository.findAll();
         List<Favourites> fav2 = new ArrayList<>();
         for (var fav : fav1) {
-            if (fav.getUser().getId() == userId) {
+            if (Objects.equals(fav.getUser().getId(), userId)) {
                 fav2.add(fav);
             }
         }

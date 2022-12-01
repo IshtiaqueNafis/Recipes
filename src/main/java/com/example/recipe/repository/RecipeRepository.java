@@ -1,6 +1,7 @@
 package com.example.recipe.repository;
 
 import com.example.recipe.models.Recipe;
+import com.example.recipe.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -34,6 +35,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     Recipe findByName(String name);
 
+    List<Recipe> findByCreatedByNotAndAvailabilityFalse(User createdBy);
 
 
 

@@ -16,6 +16,7 @@ import java.util.List;
  */
 //endregion
 public interface FavouritesRepository extends JpaRepository<Favourites, Long> {
+    long countByRecipe_Id(Long id);
 
 
 }

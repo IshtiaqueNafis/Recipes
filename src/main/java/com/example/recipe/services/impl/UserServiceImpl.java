@@ -2,6 +2,8 @@ package com.example.recipe.services.impl;
 
 import com.example.recipe.dto.RecipeDto;
 import com.example.recipe.dto.RegistrationDto;
+import com.example.recipe.exception.AlreadyOnFavException;
+import com.example.recipe.exception.EmailAlreadyExistsException;
 import com.example.recipe.mapper.RecipeMapper;
 import com.example.recipe.models.*;
 import com.example.recipe.repository.*;
@@ -13,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -112,9 +115,53 @@ public class UserServiceImpl implements UserService {
                 counter++;
             }
         }
-
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
         userDetails.setTotalNumberOfMealPlans(mealPlansCount);
-        userDetails.setAverageRecipeRating(userRatings / counter);
+        userDetails.setAverageRecipeRating(Double.parseDouble(df.format(userRatings / counter)));
+
+
         return userDetails;
     }
+
+    @Override
+    public void changeUserPassword(String OldPassword, String NewPassword) {
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User user = userRepository.findByEmail(email);
+        if(passwordEncoder.matches(OldPassword,user.getPassword())){
+            System.out.println("sucess");
+            user.setPassword(passwordEncoder.encode(NewPassword));
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public void resetPassword() {
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User user = userRepository.findByEmail(email);
+        user.setPassword(passwordEncoder.encode("Password1234"));
+        userRepository.save(user);
+
+    }
+
+    @Override
+    public void changeUserInfo(ChangeUserDetails changeUserDetails) throws EmailAlreadyExistsException {
+        String email = SecurityUtils.getCurrentUser().getUsername();
+        User user = userRepository.findByEmail(email);
+
+        User checkExistingEmail = userRepository.findByEmail(changeUserDetails.getEmail());
+
+        if(checkExistingEmail==null){
+            user.setName(changeUserDetails.getFirstName() + " " + changeUserDetails.getLastName());
+            user.setEmail(changeUserDetails.getEmail());
+            userRepository.save(user);
+        }else{
+            throw new EmailAlreadyExistsException();
+        }
+
+
+
+    }
+
+
 }

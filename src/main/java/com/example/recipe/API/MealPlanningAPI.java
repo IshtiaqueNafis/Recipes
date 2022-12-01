@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -32,52 +31,54 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api")
+
+
 public class MealPlanningAPI {
 
+    //region *** services ***
     MealPlanService mealPlanService;
     RecipeService recipeService;
+    //endregion
 
+    //region *** Method:--> get: route:--> "/meal_plan": // return:--> List<MealPlanner> getMealPlans
     @GetMapping("/meal_plan")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonBackReference
-    List<MealPlanner> getMealPlans(@RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start, @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
+    List<MealPlanner> getMealPlans(@RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+                                   @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
         return mealPlanService.getMealPlans(start, end);
     }
+    //endregion
 
 
+    //region *** method:Post("/meal_plan/create"): return --> a meal Plan"
     @PostMapping("/meal_plan/create")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
     @JsonBackReference
-    MealPlanner createMeal(@NotNull @RequestBody MealPlanCreateParams params, Model model) {
+    MealPlanner createMeal(@NotNull @RequestBody MealPlanCreateParams params) {
 
         MealPlanner mealPlanner = new MealPlanner();
-        System.out.println(params.recipeId);
-        System.out.println(params.start);
-        System.out.println(params.end);
         mealPlanService.createMealPlan(mealPlanner, params.recipeId, params.start, params.end);
-
         return mealPlanner;
     }
+    //endregion
 
+    //region ***
     @PostMapping("/meal_plan/move")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
     MealPlanner moveMeal(@RequestBody MealMoveParams params) {
-        MealPlanner mealPlanner = mealPlanService.moveMealPlanDate(params.id, params.start, params.end);
-
-
-
-        return mealPlanner;
+        return mealPlanService.moveMealPlanDate(params.id, params.start, params.end);
     }
+    //endregion
 
     @PostMapping("/meal_plan/update")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
     MealPlanner updateMealPlan(@RequestBody MealUpdateParams params) {
-        MealPlanner mealPlanner = mealPlanService.updateMealPlan(params.id, params.recipeId);
 
-        return mealPlanner;
+        return mealPlanService.updateMealPlan(params.id, params.recipeId);
     }
 
     @PostMapping("/meal_plan/delete")
@@ -108,14 +109,6 @@ public class MealPlanningAPI {
         public String text;
 
     }
-
-    public static class MealPlanUpdateParams {
-        public Long id;
-        public LocalDateTime start;
-        public LocalDateTime end;
-        public Long resource;
-    }
-
 
 
     public static class MealMoveParams {

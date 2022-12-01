@@ -47,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentDto> findAllComments() {
         List<Comment> comments = commentRepository.findAll();
-        return comments.stream().map(comment -> CommentMapper.mapToCommentDto(comment)).collect(Collectors.toList());
+        return comments.stream().map(CommentMapper::mapToCommentDto).collect(Collectors.toList());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class CommentServiceImpl implements CommentService {
         User user = userRepository.findByEmail(email);
         Long userId = user.getId();
         List<Comment> comments = commentRepository.findCommentByRecipe(userId);
-        return comments.stream().map((comment) -> CommentMapper.mapToCommentDto(comment)).collect(Collectors.toList());
+        return comments.stream().map(CommentMapper::mapToCommentDto).collect(Collectors.toList());
     }
 
 }

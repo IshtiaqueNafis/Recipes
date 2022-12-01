@@ -11,3 +11,4 @@ package com.example.recipe.exception;
 //endregion
 public class AlreadyOnFavException extends Exception{
 }
+

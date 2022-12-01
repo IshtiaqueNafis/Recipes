@@ -31,9 +31,11 @@
             <td th:text="${f.recipe.calories}"></td>
             <td th:text="${#temporals.format(f.recipe.createdOn,'dd MMM yyyy')}"></td>
             <td>
-                <a th:href="@{/registered/recipes/favourites/remove/{id}(id=${f.id})}" class="btn btn-primary">Remove
+                <a th:href="@{/registered/recipes/favourites/remove/{id}(id=${f.id})}" class="btn btn-danger">Remove
                     from
                     favourites</a>
+
+                <a th:href="@{/recipe_details/{id}(id=${f.recipe.id})}" class="btn text-white" style="background-color: #481449;"><i class="fas fa-info"></i></a>
 
             </td>
         </tr>

@@ -8,9 +8,11 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+
 //region ***** *******************************
 /*
  * Project: < project name Recipes >
@@ -49,13 +51,22 @@ public class RecipeDto {
 
 
     public double getCommentRatings() {
+
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
         double ratings = 0;
         for (var comment : comments) {
             ratings += comment.getRating();
         }
 
-        return comments.size() < 0 ? 0 : ratings / comments.size();
+        return Double.parseDouble(df.format(ratings / comments.size()));
     }
 
+    private Long numberOfEvents = 0L;
+
+
+    private Long numberOfMealPlans = 0L;
+
+    private Long numberTimesFavorites = 0L;
 
 }

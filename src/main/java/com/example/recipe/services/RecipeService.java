@@ -38,5 +38,7 @@ public interface RecipeService {
 
     User findUserFromRecipeId(Long id);
 
+    List<Recipe> getRecipesForEvents();
+
 
 }
