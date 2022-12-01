@@ -10,9 +10,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 //region ***** *******************************
 /*
  * Project: < project name Recipes >
@@ -34,6 +36,8 @@ public class RecipeApplication implements CommandLineRunner {
     UserRepository userRepository;
     FavouritesRepository favouritesRepository;
     CommentRepository commentRepository;
+
+    MealPlannerRepository mealPlannerRepository;
     private PasswordEncoder passwordEncoder;
 
     public static void main(String[] args) {
@@ -63,9 +67,6 @@ public class RecipeApplication implements CommandLineRunner {
             id++;
 
         }
-
-
-
 
 
         List<Recipe> recipes = new ArrayList<>(
@@ -107,8 +108,6 @@ public class RecipeApplication implements CommandLineRunner {
         commentRepository.save(new Comment("naf", 5, "Bad Recipe", recipeRepository.findByName("Firecracker Ribs")));
 
 
-
-
         favouritesRepository.save(new Favourites(userRepository.findByEmail("nafu22@gmail.com"), recipeRepository.findByName("Tandoori Masala")));
         favouritesRepository.save(new Favourites(userRepository.findByEmail("nafu22@gmail.com"), recipeRepository.findByName("Steak, Bacon, and Gruyere Paninis")));
         favouritesRepository.save(new Favourites(userRepository.findByEmail("nafu22@gmail.com"), recipeRepository.findByName("Firecracker Ribs")));
@@ -118,7 +117,30 @@ public class RecipeApplication implements CommandLineRunner {
         favouritesRepository.save(new Favourites(userRepository.findByEmail("naveed@gmail.com"), recipeRepository.findByName("Veal Gravy Soup")));
         favouritesRepository.save(new Favourites(userRepository.findByEmail("naveed@gmail.com"), recipeRepository.findByName("Crispy Fish Sandwich")));
 
+/*
+  public MealPlanner(LocalDateTime start, LocalDateTime end, String text, User user, Recipe recipe) {
+        this.start = start;
+        this.end = end;
+        this.text = text;
+        this.user = user;
+        this.recipe = recipe;
+    }
+ */
 
+
+        List<MealPlanner> mealPlanners = new ArrayList<>(Arrays.asList(
+                new MealPlanner(LocalDateTime.parse("2022-10-23T11:00:00"), LocalDateTime.parse("2022-10-23T11:30:00"), recipeRepository.findByName("Crispy Fish Sandwich").getName(), userRepository.findByEmail("nafu22@gmail.com"), recipeRepository.findByName("Crispy Fish Sandwich")),
+                new MealPlanner(LocalDateTime.parse("2022-10-24T11:00:00"), LocalDateTime.parse("2022-10-24T11:30:00"), recipeRepository.findByName("Ham and Cheese Crepes").getName(), userRepository.findByEmail("nafu22@gmail.com"), recipeRepository.findByName("Ham and Cheese Crepes")),
+                new MealPlanner(LocalDateTime.parse("2022-10-25T08:00:00"), LocalDateTime.parse("2022-10-25T08:30:00"), recipeRepository.findByName("Veal Gravy Soup").getName(), userRepository.findByEmail("nafu22@gmail.com"), recipeRepository.findByName("Veal Gravy Soup")),
+                new MealPlanner(LocalDateTime.parse("2022-10-25T08:00:00"), LocalDateTime.parse("2022-10-25T08:30:00"), recipeRepository.findByName("Veal Gravy Soup").getName(), userRepository.findByEmail("wendell@gmail.com"), recipeRepository.findByName("Veal Gravy Soup")),
+                new MealPlanner(LocalDateTime.parse("2022-10-26T08:00:00"), LocalDateTime.parse("2022-10-26T08:30:00"), recipeRepository.findByName("Firecracker Ribs").getName(), userRepository.findByEmail("wendell@gmail.com"), recipeRepository.findByName("Firecracker Ribs")),
+                new MealPlanner(LocalDateTime.parse("2022-10-27T08:00:00"), LocalDateTime.parse("2022-10-27T08:30:00"), recipeRepository.findByName("Prekmurska Gibanica").getName(), userRepository.findByEmail("wendell@gmail.com"), recipeRepository.findByName("Prekmurska Gibanica")),
+                new MealPlanner(LocalDateTime.parse("2022-10-27T08:00:00"), LocalDateTime.parse("2022-10-27T08:30:00"), recipeRepository.findByName("Prekmurska Gibanica").getName(), userRepository.findByEmail("naveed@gmail.com"), recipeRepository.findByName("Prekmurska Gibanica"))
+        ));
+
+        for (MealPlanner mealPlanner:mealPlanners){
+            mealPlannerRepository.save(mealPlanner);
+        }
 
 
     }
